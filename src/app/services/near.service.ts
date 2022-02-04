@@ -21,13 +21,18 @@ export class NearService {
   }
 
   //function to get all recipients from registry contract
-  getRecipients = () => {
-    return this.wallet.account().viewFunction(environment.REGISTRY_CONTRACT_ID, "list_all");
+  getRecipients = async () => {
+    return await this.wallet.account().viewFunction(environment.REGISTRY_CONTRACT_ID, "list_all");
   };
 
   //function to get all messages from thankyou contract
-  getMessages = () => {
-    return this.wallet.account().viewFunction(environment.CONTRACT_ID, "list")
+  getMessages = async () => {
+    // return await this.wallet.account().viewFunction(environment.CONTRACT_ID, "list")
+    return await this.wallet.account().functionCall({
+      contractId: environment.CONTRACT_ID,
+      methodName: "list",
+      args: {}
+    })
   }
 
   //function to transfer funds to  owner
@@ -38,7 +43,6 @@ export class NearService {
   //function to sendMessage
   sendMessage = ({message, anonymous, attachedDeposit}: { message: any, anonymous: any, attachedDeposit: any }) => {
     attachedDeposit = utils.format.parseNearAmount(attachedDeposit) ?? utils.format.parseNearAmount("0");
-    console.log(attachedDeposit);
     return this.wallet.account().functionCall({
       contractId: environment.CONTRACT_ID,
       methodName: "say",

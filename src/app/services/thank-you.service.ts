@@ -16,7 +16,10 @@ export class ThankYouService {
   updateValues = async () => {
     this.recipients = await this.nearService.getRecipients();
     this.messages = await this.nearService.getMessages();
+    console.log('messages');
     console.log(this.recipients);
+    console.log('values');
+    console.log(this.messages);
   };
 
   handleSendMessage = async ({message, anonymous, attachedDeposit}: { message: any, anonymous: any, attachedDeposit: any }) => {

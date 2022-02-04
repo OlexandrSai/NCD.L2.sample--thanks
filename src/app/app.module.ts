@@ -8,9 +8,10 @@ import {InfoComponent} from './components/info/info.component';
 import {MessageFormComponent} from './components/forms/message-form/message-form.component';
 import {LearnSectionComponent} from './components/learn-section/learn-section.component';
 import {MessageHistoryComponent} from './components/message-history/message-history.component';
-import {menu, HeroIconModule, user, logout, annotation, lightningBolt} from 'ng-heroicon';
+import {menu, HeroIconModule, user, logout, annotation, lightningBolt, academicCap, desktopComputer} from 'ng-heroicon';
 import {NgSelectModule} from "@ng-select/ng-select";
 import {FormsModule} from "@angular/forms";
+import { MessageComponent } from './components/message/message.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {FormsModule} from "@angular/forms";
     InfoComponent,
     MessageFormComponent,
     LearnSectionComponent,
-    MessageHistoryComponent
+    MessageHistoryComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +31,9 @@ import {FormsModule} from "@angular/forms";
       user,
       logout,
       annotation,
-      lightningBolt
+      lightningBolt,
+      academicCap,
+      desktopComputer
     }, {
       defaultHostDisplay: 'inlineBlock', // default 'none'
       attachDefaultDimensionsIfNoneFound: true // default 'false'

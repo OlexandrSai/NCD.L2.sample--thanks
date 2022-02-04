@@ -3,10 +3,13 @@
 <!--    <RadioGroupLabel class="sr-only">-->
 <!--      Message History-->
 <!--    </RadioGroupLabel>-->
-<!--    <div>-->
-<!--      <RadioGroupOption v-for="item in this.messages" :key="item.id">-->
+    <div>
+      <div *ngFor="let item of items" >
+<!--      <RadioGroupOption *ngFor="let item of items" >-->
+        <app-message [message]="item"></app-message>
 <!--        <Message :item="item"/>-->
 <!--      </RadioGroupOption>-->
-<!--    </div>-->
+      </div>
+    </div>
 <!--  </RadioGroup>-->
 </div>
