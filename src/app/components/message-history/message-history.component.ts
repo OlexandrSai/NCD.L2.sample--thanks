@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ThankYouService} from "../../services/thank-you.service";
 
 @Component({
   selector: 'app-message-history',
@@ -9,32 +10,37 @@ export class MessageHistoryComponent implements OnInit {
   public items = [
     {
       id: 1,
-      author: 'jane.near',
-      message: 'Thanks for helping me with my first smart contract!',
-      tip: '2 N'
+      sender: 'jane.near',
+      text: 'Thanks for helping me with my first smart contract!',
+      contribution: 1000000000000000000000000
     },
     {
       id: 2,
-      author: 'john.near',
-      message: 'Appreciate your questions in the Zoom meeting',
-      tip: ''
+      sender: 'john.near',
+      text: 'Appreciate your questions in the Zoom meeting',
+      contribution: 0
     },
     {
       id: 3,
-      author: 'mary.near',
-      message: 'Loved your examples today, thank you!!!',
-      tip: '10 N'
+      sender: 'mary.near',
+      text: 'Loved your examples today, thank you!!!',
+      contribution: 10000000000000000000000000
     },
     {
       id: 4,
-      author: '',
-      message: 'You\'re so awesome',
-      tip: ''
+      sender: '',
+      text: 'You\'re so awesome',
+      contribution: 0
     }
   ]
-  constructor() { }
+  constructor(public thankYouService: ThankYouService) { }
 
   ngOnInit(): void {
+    this.updateMessages();
+  }
+
+  updateMessages = async () => {
+    this.items = await this.thankYouService.getMessages();
   }
 
 }

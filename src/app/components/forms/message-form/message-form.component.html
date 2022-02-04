@@ -11,48 +11,42 @@
         You can do that right here.
       </p>
     </div>
-
-
     <div class="grid grid-cols-6 gap-6">
       <div class="col-span-6">
-<!--        <mat-select></mat-select>-->
-        <ng-select [multiple]="false" [items]="thankYouService.recipients" [(ngModel)]="recipient" placeholder="Recipient name"></ng-select>
-
-<!--        <Multiselect-->
-<!--          v-model="value"-->
-<!--          mode="single"-->
-<!--          placeholder="Recipient name"-->
-<!--          :options="this.recipients"-->
-<!--          :search="true"-->
-<!--        />-->
+        <select (change)="recipientChange($event.target)" name="recipient"
+                class="w-full contract-select p-2 text-base rounded-md text-gray-500">
+          <option value="" disabled selected>Recipient name</option>
+          <option *ngFor="let recipient of thankYouService.recipients" value="{{recipient}}">{{recipient}}</option>
+        </select>
       </div>
-      <!-- <div class="col-span-6">
-        <label for="recipient" class="sr-only">Recipient name</label>
-        <input type="text"  name="recipient" id="recipient" autocomplete="recipient" placeholder="Recipient name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
-      </div> -->
       <div class="col-span-6">
         <label for="message" class="sr-only">Your message</label>
-        <textarea [(ngModel)]="message" rows="4"  id="message" autocomplete="message" placeholder="Your message" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
+        <textarea
+          class="p-2 mt-1 border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm"
+          [(ngModel)]="message" rows="4" id="message" autocomplete="message" placeholder="Your message"></textarea>
       </div>
       <div class="col-span-6">
-<!--        <SwitchGroup as="div" class="flex items-center">-->
-<!--          <Switch v-model="anonymous" :class="[anonymous ? 'bg-indigo-600' : 'bg-gray-200', 'relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500']">-->
-<!--            <span aria-hidden="true" :class="[anonymous ? 'translate-x-5' : 'translate-x-0', 'pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200']" />-->
-<!--          </Switch>-->
-<!--          <SwitchLabel as="span" class="ml-3">-->
-            <span class="text-sm font-medium text-gray-900">Send anonymously </span>
-<!--          </SwitchLabel>-->
-<!--        </SwitchGroup>-->
+        <label class="flex items-center text-xl">
+          <input type="checkbox" class="appearance-none peer" (change)="anonymous = !anonymous"/>
+          <span
+            class="w-10 h-6 flex items-center flex-shrink-0 p-0.5 bg-gray-300 rounded-full duration-300 ease-in-out peer-checked:bg-indigo-500 after:w-5 after:h-5 after:bg-white after:rounded-full after:shadow-md after:duration-300 peer-checked:after:translate-x-4"></span>
+          <span class="ml-2 text-sm form-check-label inline-block font-medium text-gray-900"
+          >Send anonymously</span>
+        </label>
       </div>
       <div class="col-span-6 sm:col-span-6 lg:col-span-3">
         <label for="tip" class="sr-only">Tip</label>
-        <div class="mt-1 relative rounded-md shadow-sm">
+        <div class=" relative rounded-md shadow-sm">
           <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <span class="text-gray-500 sm:text-sm">
                         Ⓝ
                       </span>
           </div>
-          <input type="text" [(ngModel)]="attachedDeposit"  id="tip" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="0" aria-describedby="message-tip" />
+          <input type="text" id="tip"
+                 class="border-gray-300 rounded-md block w-full py-2 pl-7 pr-12 sm:text-sm "
+                 placeholder="0" aria-describedby="message-tip"
+                 [(ngModel)]="attachedDeposit"
+          />
           <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <span class="text-gray-500 sm:text-sm" id="message-tip">
                         NEAR
@@ -60,16 +54,19 @@
           </div>
         </div>
       </div>
-      <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-        <button  (click)="handleSubmit()" class="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-          Say Thanks
+      <div class="col-span-6 sm:col-span-6 lg:col-span-3 ">
+        <!--        TODO: Loading disabled + spinner-->
+        <button (click)="handleSubmit()" [disabled]="loading"
+                class="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          {{loading ? 'Loading...' : 'Say Thanks'}}
         </button>
-        <p *ngIf="loading">loading</p>
-      </div>
 
+      </div>
+      <!--        TODO: Loading disabled + spinner-->
       <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-        <button  (click)="handleTransfer()" class="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-          Transfer to owner
+        <button (click)="handleTransfer()" [disabled]="loading"
+                class="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          {{loading ? 'Loading...' : 'Transfer to owner'}}
         </button>
       </div>
     </div>

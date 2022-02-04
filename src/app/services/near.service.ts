@@ -27,12 +27,7 @@ export class NearService {
 
   //function to get all messages from thankyou contract
   getMessages = async () => {
-    // return await this.wallet.account().viewFunction(environment.CONTRACT_ID, "list")
-    return await this.wallet.account().functionCall({
-      contractId: environment.CONTRACT_ID,
-      methodName: "list",
-      args: {}
-    })
+    return await this.wallet.account().viewFunction(environment.CONTRACT_ID, "list")
   }
 
   //function to transfer funds to  owner

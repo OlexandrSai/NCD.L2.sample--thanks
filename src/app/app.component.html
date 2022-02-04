@@ -21,7 +21,7 @@
     <app-header></app-header>
     <div class="relative mt-12 lg:mt-24 lg:grid lg:grid-cols-2 lg:gap-8 lg:items-center">
       <app-info></app-info>
-      <app-message-form></app-message-form>
+      <app-message-form (newMessageEvent)="reloadHistory()"></app-message-form>
 <!--      <info/>-->
 <!--      <message-form :recipients='recipients' :isRecipientsLoaded='isRecipientsLoaded' :sendMessage='sendMessage'-->
 <!--                    :transferFunds='transferFunds'/>-->

@@ -13,4 +13,8 @@ export class MessageComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  getAmount = (tip: number) => {
+      return tip==0 ? tip +" N" : (tip/1000000000000000000000000).toFixed(4)+ " N"
+  }
 }
