@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {ThankYouService} from "../../../services/thank-you.service";
 
 @Component({
@@ -6,7 +6,7 @@ import {ThankYouService} from "../../../services/thank-you.service";
   templateUrl: './message-form.component.html',
   styleUrls: ['./message-form.component.css']
 })
-export class MessageFormComponent implements OnInit {
+export class MessageFormComponent {
   public loading = false;
   public anonymous = false;
   public attachedDeposit = 0;
@@ -14,9 +14,6 @@ export class MessageFormComponent implements OnInit {
   public recipient:any = null;
 
   constructor(public thankYouService: ThankYouService) {
-  }
-
-  ngOnInit(): void {
   }
 
   handleSubmit = async () => {

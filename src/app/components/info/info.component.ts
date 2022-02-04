@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {HeroIconName} from "ng-heroicon";
 
 @Component({
@@ -6,7 +6,7 @@ import {HeroIconName} from "ng-heroicon";
   templateUrl: './info.component.html',
   styleUrls: ['./info.component.css']
 })
-export class InfoComponent implements OnInit {
+export class InfoComponent {
   public transferFeatures = [
     {
       id: 1,
@@ -25,6 +25,4 @@ export class InfoComponent implements OnInit {
   ]
 
   constructor() { }
-
-  ngOnInit(): void {}
 }

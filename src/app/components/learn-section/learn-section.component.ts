@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {HeroIconName} from "ng-heroicon";
 
 @Component({
@@ -6,7 +6,7 @@ import {HeroIconName} from "ng-heroicon";
   templateUrl: './learn-section.component.html',
   styleUrls: ['./learn-section.component.css']
 })
-export class LearnSectionComponent implements OnInit {
+export class LearnSectionComponent {
   public communicationFeatures = [
     {
       id: 1,
@@ -24,8 +24,5 @@ export class LearnSectionComponent implements OnInit {
     },
   ]
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

@@ -5,11 +5,7 @@
 <!--    </RadioGroupLabel>-->
     <div>
       <div *ngFor="let item of thankYouService.messages" >
-<!--      <RadioGroupOption *ngFor="let item of items" >-->
         <app-message [message]="item"></app-message>
-<!--        <Message :item="item"/>-->
-<!--      </RadioGroupOption>-->
       </div>
     </div>
-<!--  </RadioGroup>-->
 </div>

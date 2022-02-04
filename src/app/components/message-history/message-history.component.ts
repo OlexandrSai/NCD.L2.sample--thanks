@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {ThankYouService} from "../../services/thank-you.service";
 
 @Component({
@@ -6,10 +6,6 @@ import {ThankYouService} from "../../services/thank-you.service";
   templateUrl: './message-history.component.html',
   styleUrls: ['./message-history.component.css']
 })
-export class MessageHistoryComponent implements OnInit {
+export class MessageHistoryComponent {
   constructor(public thankYouService: ThankYouService) { }
-
-  ngOnInit(): void {
-  }
-
 }
