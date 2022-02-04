@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ThankYouService} from "../../../services/thank-you.service";
 
 @Component({
@@ -7,7 +7,6 @@ import {ThankYouService} from "../../../services/thank-you.service";
   styleUrls: ['./message-form.component.css']
 })
 export class MessageFormComponent implements OnInit {
-  @Output() newMessageEvent = new EventEmitter<any>();
   public loading = false;
   public anonymous = false;
   public attachedDeposit = 0;
@@ -28,7 +27,7 @@ export class MessageFormComponent implements OnInit {
       anonymous: this.anonymous,
       attachedDeposit: this.attachedDeposit
     });
-    this.newMessageEvent.emit(true);
+    await this.thankYouService.updateMessages();
     this.loading = false;
   }
 

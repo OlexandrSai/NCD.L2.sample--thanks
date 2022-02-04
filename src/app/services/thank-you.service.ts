@@ -6,6 +6,7 @@ import {NearService} from "./near.service";
 })
 export class ThankYouService {
   public recipients: any;
+  public messages: any;
   public err: any;
 
   constructor(public nearService: NearService) {
@@ -14,6 +15,7 @@ export class ThankYouService {
 
   updateValues = async () => {
     this.recipients = await this.nearService.getRecipients();
+    await this.updateMessages();
   };
 
   handleSendMessage = async ({message, anonymous, attachedDeposit}: { message: any, anonymous: any, attachedDeposit: any }) => {
@@ -24,7 +26,8 @@ export class ThankYouService {
     await this.nearService.transfer();
   }
 
-  getMessages = async () => {
-    return await this.nearService.getMessages();
+  updateMessages = async () => {
+    this.messages = await this.nearService.getMessages();
+    this.messages.reverse();
   }
 }

@@ -28,19 +28,15 @@
       <div class="col-span-6">
         <label class="flex items-center text-xl">
           <input type="checkbox" class="appearance-none peer" (change)="anonymous = !anonymous"/>
-          <span
-            class="w-10 h-6 flex items-center flex-shrink-0 p-0.5 bg-gray-300 rounded-full duration-300 ease-in-out peer-checked:bg-indigo-500 after:w-5 after:h-5 after:bg-white after:rounded-full after:shadow-md after:duration-300 peer-checked:after:translate-x-4"></span>
-          <span class="ml-2 text-sm form-check-label inline-block font-medium text-gray-900"
-          >Send anonymously</span>
+          <span class="w-10 h-6 flex items-center flex-shrink-0 p-0.5 bg-gray-300 rounded-full duration-300 ease-in-out peer-checked:bg-indigo-500 after:w-5 after:h-5 after:bg-white after:rounded-full after:shadow-md after:duration-300 peer-checked:after:translate-x-4"></span>
+          <span class="ml-2 text-sm form-check-label inline-block font-medium text-gray-900">Send anonymously</span>
         </label>
       </div>
       <div class="col-span-6 sm:col-span-6 lg:col-span-3">
         <label for="tip" class="sr-only">Tip</label>
         <div class=" relative rounded-md shadow-sm">
           <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <span class="text-gray-500 sm:text-sm">
-                        Ⓝ
-                      </span>
+            <span class="text-gray-500 sm:text-sm">Ⓝ</span>
           </div>
           <input type="text" id="tip"
                  class="border-gray-300 rounded-md block w-full py-2 pl-7 pr-12 sm:text-sm "
@@ -48,31 +44,44 @@
                  [(ngModel)]="attachedDeposit"
           />
           <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                      <span class="text-gray-500 sm:text-sm" id="message-tip">
-                        NEAR
-                      </span>
+            <span class="text-gray-500 sm:text-sm" id="message-tip">NEAR</span>
           </div>
         </div>
       </div>
       <div class="col-span-6 sm:col-span-6 lg:col-span-3 ">
-        <!--        TODO: Loading disabled + spinner-->
         <button (click)="handleSubmit()" [disabled]="loading"
-                class="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-          {{loading ? 'Loading...' : 'Say Thanks'}}
+                class=" py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-300">
+          <span *ngIf="!loading; else elseBlock">Say Thanks</span>
+          <ng-template #elseBlock>
+            <div class="flex">
+              <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+                   viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              <span>Loading...</span>
+            </div>
+          </ng-template>
         </button>
-
       </div>
-      <!--        TODO: Loading disabled + spinner-->
       <div class="col-span-6 sm:col-span-6 lg:col-span-3">
         <button (click)="handleTransfer()" [disabled]="loading"
-                class="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-          {{loading ? 'Loading...' : 'Transfer to owner'}}
+                class="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-300">
+          <span *ngIf="!loading; else elseBlock">Transfer to owner</span>
+          <ng-template #elseBlock>
+            <div class="flex">
+              <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+                   viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              <span>Loading...</span>
+            </div>
+          </ng-template>
         </button>
       </div>
     </div>
   </div>
 </div>
-
-<!--<loading v-model:active="loading"-->
-<!--         :can-cancel="true"-->
-<!--         :is-full-page="fullPage"/>-->
