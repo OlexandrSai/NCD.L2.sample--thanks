@@ -6,6 +6,10 @@
 
 ## Project setup
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.3.
+```
+npm i -g @angular/cli
+npm install
+```
 
 ## Development server
 
