@@ -40,35 +40,41 @@ export const isRegistered = (contractId) => {
 // functions to call THANKS contract public change methods
 // --------------------------------------------------------------------------
 
-//
-export const registerNewThanksContract = ({ message, anonymous, attachedDeposit }) => {
+//function to send a message anon or not anon
+export const sendMessage = ({ message, anonymous, attachedDeposit }) => {
     attachedDeposit = utils.format.parseNearAmount(attachedDeposit)
     return wallet.account().functionCall({
-        contractId: CONTRACT_ID,
+        contractId: THANKS_CONTRACT_ID,
         methodName: "say",
         args: { message, anonymous },
         attachedDeposit: attachedDeposit
     })
 }
 
-//function to get all messages from thankyou contract
+// --------------------------------------------------------------------------
+// functions to call contracts(Registry, Thanks) Owner CHANGE methods
+// --------------------------------------------------------------------------
+
+//function to get all messages from thanks contract
 export const getMessages = () => {
-    return wallet.account().viewFunction(CONTRACT_ID, "list")
-}
-
-//function to transfer funds to  owner
-
-export const transfer = () => {
-    return wallet.account().viewFunction(CONTRACT_ID, "transfer")
-}
-
-//function to sendMessage
-export const sendMessage = ({ message, anonymous, attachedDeposit }) => {
-    attachedDeposit = utils.format.parseNearAmount(attachedDeposit)
     return wallet.account().functionCall({
-        contractId: CONTRACT_ID,
-        methodName: "say",
-        args: { message, anonymous },
-        attachedDeposit: attachedDeposit
+        contractId: THANKS_CONTRACT_ID,
+        methodName: "list",
+    })
+}
+
+//function to get summarized info about thanks contract
+export const getSummarizedInfo = () => {
+    return wallet.account().functionCall({
+        contractId: THANKS_CONTRACT_ID,
+        methodName: "summarize",
+    })
+}
+
+//function to trasfer funds to the owner of thanks smart contract
+export const transferFundsToOwner = () => {
+    return wallet.account().functionCall({
+        contractId: THANKS_CONTRACT_ID,
+        methodName: "transfer",
     })
 }
