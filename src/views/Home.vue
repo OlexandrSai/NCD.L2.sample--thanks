@@ -43,7 +43,6 @@
 </template>
 
 <script>
-import {wallet, CONTRACT_ID } from '@/services/near'
 import Login from '@/components/Login.vue'
 import Header from '@/components/Header.vue'
 import Info from '@/components/Info.vue'
@@ -52,7 +51,8 @@ import LearnSection from '@/components/LearnSection.vue'
 import MessageHistory from '@/components/MessageHistory.vue'
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
-import { useRecipients } from "@/composables/near"
+import { useContracts } from "@/composables/near"
+import { useWallet } from '@/composables/near.js'
 
 export default {
   data () {
@@ -96,13 +96,14 @@ export default {
     //Loading
   },
   setup(props) {
-      const accountId = wallet.getAccountId();
-      const { recipients, messages, sendMessage, transferFunds } = useRecipients();
+      const { accountId } = useWallet();
+      const { recipients, messages, summarizedInfo, sendMessage, transferFunds } = useContracts();
 
       return {
           accountId,
           recipients,
           messages,
+          summarizedInfo,
           sendMessage,
           transferFunds
       }

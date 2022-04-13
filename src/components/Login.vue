@@ -25,24 +25,18 @@
 
 <script>
 import { UserIcon, LogoutIcon} from '@heroicons/vue/outline'
-import {ref} from "vue"
-import {wallet, CONTRACT_ID } from '@/services/near'
+import { useWallet } from '@/composables/near.js'
 export default {
     components: {
         UserIcon,
         LogoutIcon
     },
-    setup(props) {
-        const accountId = ref("")
-        accountId.value = wallet.getAccountId();
+    setup() {
+        const { accountId,signIn, signOut } = useWallet();
         return {
             accountId,
-            signIn: () => wallet.requestSignIn(CONTRACT_ID),
-            signOut: () => {
-                wallet.signOut();
-                localStorage.removeItem(`near-api-js:keystore:${accountId.value}:testnet`);
-                accountId.value=wallet.getAccountId()
-            }
+            signIn,
+            signOut
         }
     }
 }

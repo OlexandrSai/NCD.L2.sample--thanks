@@ -1,4 +1,4 @@
-import { keyStores, Near, WalletConnection, utils } from "near-api-js";
+import { keyStores, Near, WalletConnection, utils, Account } from "near-api-js";
 import BN from "bn.js";
 
 export const THANKS_CONTRACT_ID = process.env.VUE_APP_THANKS_CONTRACT_ID;
