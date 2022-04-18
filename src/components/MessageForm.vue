@@ -64,22 +64,19 @@
                   </button>
                 </div>
 
-                <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-                  <button  @click="handleTransfer" class="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <div v-if="isOwner" class="col-span-6 sm:col-span-6 lg:col-span-3">
+                  <button  @click="transferFunds" class="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     Transfer to owner
                   </button>
                 </div>
               </div>
             </div>
           </div>
-
-          <loading v-model:active="loading"
-                 :can-cancel="true"
-                 :is-full-page="fullPage"/>
 </template>
 
 <script>
 import { ref } from 'vue'
+import { useContracts } from '../composables/near'
 import Multiselect from '@vueform/multiselect'
 import '@vueform/multiselect/themes/default.css'
 import { Switch, SwitchGroup, SwitchLabel } from '@headlessui/vue'
@@ -91,54 +88,32 @@ export default {
     SwitchGroup,
     SwitchLabel
   },
-  props:{
-        recipients: {
-            typeof:Array,
-            required:false
-        },
-        isRecipientsLoaded: {
-            typeof:Boolean,
-            required:true
-        },
-        sendMessage: {
-          type: Function,
-          required: true
-        },
-        transferFunds: {
-          type:Function,
-          required: true
-        }
-    },
-    setup(props) {
+    setup() {
+
       const message = ref("")
       const anonymous = ref(false)
       const attachedDeposit = ref(0)
-      const fullPage = ref(true)
-      const loading = ref(false)
+      
+      const { isOwner, recipients, sendMessage, transferFunds } = useContracts()
 
       const handleSubmit = () => {
-        loading.value=true;
-        props.sendMessage({
+        console.log('inside')
+        sendMessage({
           message:message.value,
           anonymous: anonymous.value,
           attachedDeposit: attachedDeposit.value
         })
-        loading.value=false;
-      }
-
-      const handleTransfer = () => {
-      console.log('inside trasnfer');
-      props.transferFunds()
+        
       }
 
       return {
         message,
         anonymous,
         attachedDeposit,
-        fullPage,
-        loading,
+        isOwner,
+        recipients,
         handleSubmit,
-        handleTransfer
+        transferFunds
       };
 
     },

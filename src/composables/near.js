@@ -4,6 +4,7 @@ import {
     THANKS_CONTRACT_ID,
     REGISTRY_CONTRACT_ID,
     getRecipients,
+    getOwner,
     isRegistered,
     sendMessage,
     getMessages,
@@ -12,6 +13,7 @@ import {
   } from "../services/near";
 
   export const useContracts = () => {
+      const isOwner = ref(false)
       const recipients = ref([]);
       const isRegistered = ref(null);
       const messages = ref();
@@ -20,12 +22,32 @@ import {
 
       onMounted(async () => {
           try {
-              recipients.value = await getRecipients()
-              console.log(recipients.value)
-              messages.value = await getMessages()
-              console.log(messages.value)
-              // summarizedInfo.value = await getSummarizedInfo()
-              // console.log(summarizedInfo.value)
+              getOwner().then((response) => {
+                isOwner.value = response==wallet.getAccountId()
+                console.log(isOwner.value)
+
+                if (isOwner.value) {
+
+                    getMessages().then((response) =>
+                    {
+                      messages.value=response
+                      console.log(messages.value)
+                    })
+  
+                    getSummarizedInfo().then((response) =>
+                    {
+                      summarizedInfo.value=response
+                      console.log(summarizedInfo.value)
+                    })
+                }
+
+              })
+              getRecipients().then((response) =>
+              {
+                recipients.value=response
+                console.log(recipients.value)
+              })
+              
           }
           catch (e) {
               err.value = e;
@@ -33,15 +55,17 @@ import {
           }
       })
 
-      const handleSendMessage = async ({message,anonymous,attachedDeposit}) => {
+      const handleSendMessage = ({message,anonymous,attachedDeposit}) => {
+            console.log('inside composables')
             sendMessage({message,anonymous,attachedDeposit});
       };
 
-      const handleTransfer = async  () => {
+      const handleTransfer = () => {
             transferFundsToOwner();
       }
 
       return {
+          isOwner,
           recipients,
           messages,
           summarizedInfo,

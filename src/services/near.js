@@ -1,4 +1,4 @@
-import { keyStores, Near, WalletConnection, utils, Account } from "near-api-js";
+import { keyStores, Near, Contract, WalletConnection, utils, Account } from "near-api-js";
 import BN from "bn.js";
 
 export const THANKS_CONTRACT_ID = process.env.VUE_APP_THANKS_CONTRACT_ID;
@@ -14,7 +14,27 @@ export const near = new Near({
     walletUrl: process.env.VUE_APP_walletUrl,
 });
 
-export const wallet = new WalletConnection(near, "thankyou");
+export const wallet = new WalletConnection(near, "sample--Thanks--dapp");
+
+function getThanksContract () {
+    return new Contract(wallet.account(), THANKS_CONTRACT_ID, {
+        viewMethods: ['get_owner'],
+        changeMethods: ['say','list','summarize','transfer']
+    })
+}
+
+function getRegistryContract () {
+    return new Contract(wallet.account(), REGISTRY_CONTRACT_ID, {
+        viewMethods: ["list_all","is_registered"],
+        changeMethods: ['register']
+    })
+}
+
+const thanksContract = getThanksContract()
+console.log(thanksContract)
+
+const registryContract = getRegistryContract()
+console.log(registryContract)
 
 // --------------------------------------------------------------------------
 // functions to call contracts(Registry, Thanks) Public VIEW methods
@@ -24,13 +44,22 @@ export const wallet = new WalletConnection(near, "thankyou");
 // --------------------------------------------------------------------------
 
 // function to get all thanks contracts ids which were added to the registry contract
-export const getRecipients = () => {
-    return wallet.account().viewFunction(REGISTRY_CONTRACT_ID, "list_all");
+export const getRecipients = async () => {
+    return await registryContract.list_all()
 };  
 
 // function to check is the contract id registered inside REGISTRY contract state
-export const isRegistered = (contractId) => {
-    return wallet.account().viewFunction(REGISTRY_CONTRACT_ID, "is_registered", {contract: contractId});
+export const isRegistered = async (contractId) => {
+    return await registryContract.is_registered({contract: contractId});
+}
+
+
+// functions to call THANKS contract public view methods
+// --------------------------------------------------------------------------
+
+//function to get owner of a thanks contract
+export const getOwner = async () => {
+    return await thanksContract.get_owner()
 }
 
 // --------------------------------------------------------------------------
@@ -41,14 +70,16 @@ export const isRegistered = (contractId) => {
 // --------------------------------------------------------------------------
 
 //function to send a message anon or not anon
-export const sendMessage = ({ message, anonymous, attachedDeposit }) => {
-    attachedDeposit = utils.format.parseNearAmount(attachedDeposit)
-    return wallet.account().functionCall({
-        contractId: THANKS_CONTRACT_ID,
-        methodName: "say",
-        args: { message, anonymous },
-        attachedDeposit: attachedDeposit
-    })
+export const sendMessage = async ({ message, anonymous, attachedDeposit }) => {
+    console.log('third inside')
+    console.log(attachedDeposit)
+    attachedDeposit = (utils.format.parseNearAmount(attachedDeposit))
+    console.log(attachedDeposit)
+    return await thanksContract.say(
+        { anonymous:anonymous, message: message },
+        gas,
+        attachedDeposit
+    )
 }
 
 // --------------------------------------------------------------------------
@@ -56,25 +87,16 @@ export const sendMessage = ({ message, anonymous, attachedDeposit }) => {
 // --------------------------------------------------------------------------
 
 //function to get all messages from thanks contract
-export const getMessages = () => {
-    return wallet.account().functionCall({
-        contractId: THANKS_CONTRACT_ID,
-        methodName: "list",
-    })
+export const getMessages = async () => {
+    return await thanksContract.list()
 }
 
 //function to get summarized info about thanks contract
-export const getSummarizedInfo = () => {
-    return wallet.account().functionCall({
-        contractId: THANKS_CONTRACT_ID,
-        methodName: "summarize",
-    })
+export const getSummarizedInfo = async () => {
+    return await thanksContract.summarize()
 }
 
 //function to trasfer funds to the owner of thanks smart contract
 export const transferFundsToOwner = () => {
-    return wallet.account().functionCall({
-        contractId: THANKS_CONTRACT_ID,
-        methodName: "transfer",
-    })
+    return thanksContract.transfer()
 }
