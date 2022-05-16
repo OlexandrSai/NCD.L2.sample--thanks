@@ -16,6 +16,8 @@
 <script>
 import { RadioGroup, RadioGroupDescription, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
 import Message from './Message.vue'
+import { onMounted } from '@vue/runtime-core'
+import { useContracts } from '../composables/near'
 
 const items = [
   {
@@ -44,14 +46,19 @@ const items = [
   }
 ]
 
-export default {
-  props: {
-    messages: {
-      typeof:Array,
-      required:false
-    }
-  },
-setup(props) {
+setup() {
+  const { isOwner, setIsOwner, messages, setMessages} = useContracts()
+
+    onMounted(() => {
+            console.log('onMounted messagehistory')
+            setIsOwner()
+
+            if (isOwner.value) {
+              setMessages()
+            }
+        })
+
+
     return {
       items,
       RadioGroup,
@@ -62,9 +69,6 @@ setup(props) {
   },
   components: {
       Message
-  },
-  methods: {
-   
   }
 }
 </script>

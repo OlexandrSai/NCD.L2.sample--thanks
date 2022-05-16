@@ -36,6 +36,12 @@ console.log(thanksContract)
 const registryContract = getRegistryContract()
 console.log(registryContract)
 
+//function to convert from yoctoNear to Near
+export const formatNearAmount = (yoctoNear) => {
+    alert(yoctoNear)
+    return utils.format.formatNearAmount(yoctoNear)
+}
+
 // --------------------------------------------------------------------------
 // functions to call contracts(Registry, Thanks) Public VIEW methods
 // --------------------------------------------------------------------------

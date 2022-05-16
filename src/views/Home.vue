@@ -19,8 +19,10 @@
 
       <div class="relative mt-12 lg:mt-24 lg:grid lg:grid-cols-2 lg:gap-8 lg:items-center">
         <info/>
-        <message-form :recipients='recipients' :isRecipientsLoaded='isRecipientsLoaded'  :sendMessage='sendMessage' :transferFunds='transferFunds'/>
-    </div>
+        <MessageForm/>
+      </div>
+
+      <Summarize/>
 
       <svg class="hidden lg:block absolute right-full transform translate-x-1/2 translate-y-12" width="404" height="784" fill="none" viewBox="0 0 404 784" aria-hidden="true">
         <defs>
@@ -34,8 +36,8 @@
       <div class="relative mt-12 sm:mt-16 lg:mt-24">
         <div class="lg:grid lg:grid-flow-row-dense lg:grid-cols-2 lg:gap-8 lg:items-center">
           <LearnSection/>
-          <MessageHistory  v-if="accountId" :messages='messages'/>
-          <MessageHistory  v-else :messages='history'/>
+          <!-- <MessageHistory  v-if="accountId" :messages='messages'/>
+          <MessageHistory  v-else :messages='history'/> -->
         </div>
       </div>
     </div>
@@ -49,6 +51,7 @@ import Info from '@/components/Info.vue'
 import MessageForm from '@/components/MessageForm.vue'
 import LearnSection from '@/components/LearnSection.vue'
 import MessageHistory from '@/components/MessageHistory.vue'
+import Summarize from '@/components/Summarize.vue'
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import { useContracts } from "@/composables/near"
@@ -90,8 +93,9 @@ export default {
     Header,
     Info,
     MessageForm,
+    Summarize,
     LearnSection,
-    MessageHistory,
+    //MessageHistory,
     Login,
     //Loading
   },

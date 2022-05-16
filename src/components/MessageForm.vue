@@ -50,7 +50,7 @@
                         Ⓝ
                       </span>
                     </div>
-                    <input type="text" v-model="attachedDeposit"  id="tip" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="0" aria-describedby="message-tip" />
+                    <input name="amount" type="text" v-model="attachedDeposit"  id="tip" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="0" aria-describedby="message-tip" />
                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <span class="text-gray-500 sm:text-sm" id="message-tip">
                         NEAR
@@ -59,13 +59,13 @@
                   </div>
                 </div>
                 <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-                  <button  @click="handleSubmit" class="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Say Thanks
+                  <button  @click="handleSubmit" class="flex py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Say Thanks 
                   </button>
                 </div>
 
                 <div v-if="isOwner" class="col-span-6 sm:col-span-6 lg:col-span-3">
-                  <button  @click="transferFunds" class="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  <button  @click="transferFunds" class="flex py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     Transfer to owner
                   </button>
                 </div>
@@ -80,6 +80,7 @@ import { useContracts } from '../composables/near'
 import Multiselect from '@vueform/multiselect'
 import '@vueform/multiselect/themes/default.css'
 import { Switch, SwitchGroup, SwitchLabel } from '@headlessui/vue'
+
 
 export default {
   components: {
@@ -103,7 +104,6 @@ export default {
           anonymous: anonymous.value,
           attachedDeposit: attachedDeposit.value
         })
-        
       }
 
       return {

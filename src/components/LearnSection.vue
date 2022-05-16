@@ -51,7 +51,3 @@ setup() {
   },
 }
 </script>
-
-<style>
-
-</style>
