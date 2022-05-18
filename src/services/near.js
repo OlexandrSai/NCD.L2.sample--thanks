@@ -1,4 +1,4 @@
-import { keyStores, Near, Contract, WalletConnection, utils, Account } from "near-api-js";
+import { keyStores, Near, Contract, WalletConnection, utils } from "near-api-js";
 import BN from "bn.js";
 
 export const THANKS_CONTRACT_ID = process.env.VUE_APP_THANKS_CONTRACT_ID;
@@ -16,29 +16,22 @@ export const near = new Near({
 
 export const wallet = new WalletConnection(near, "sample--Thanks--dapp");
 
-function getThanksContract () {
+function getThanksContract() {
     return new Contract(wallet.account(), THANKS_CONTRACT_ID, {
         viewMethods: ['get_owner'],
-        changeMethods: ['say','list','summarize','transfer']
+        changeMethods: ['say', 'list', 'summarize', 'transfer']
     })
 }
 
-function getRegistryContract () {
+function getRegistryContract() {
     return new Contract(wallet.account(), REGISTRY_CONTRACT_ID, {
-        viewMethods: ["list_all","is_registered"],
+        viewMethods: ["list_all", "is_registered"],
         changeMethods: ['register']
     })
 }
 
 const thanksContract = getThanksContract()
-
 const registryContract = getRegistryContract()
-
-//function to convert from yoctoNear to Near
-export const formatNearAmount = (yoctoNear) => {
-    alert(yoctoNear)
-    return utils.format.formatNearAmount(yoctoNear)
-}
 
 // --------------------------------------------------------------------------
 // functions to call contracts(Registry, Thanks) Public VIEW methods
@@ -50,11 +43,11 @@ export const formatNearAmount = (yoctoNear) => {
 // function to get all thanks contracts ids which were added to the registry contract
 export const getRecipients = () => {
     return registryContract.list_all()
-};  
+};
 
 // function to check is the contract id registered inside REGISTRY contract state
 export const isRegistered = async (contractId) => {
-    return await registryContract.is_registered({contract: contractId});
+    return await registryContract.is_registered({ contract: contractId });
 }
 
 
@@ -77,7 +70,7 @@ export const getOwner = () => {
 export const sendMessage = ({ message, anonymous, attachedDeposit }) => {
     attachedDeposit = (utils.format.parseNearAmount(attachedDeposit.toString()))
     return thanksContract.say(
-        { anonymous:anonymous, message: message },
+        { anonymous: anonymous, message: message },
         gas,
         attachedDeposit
     )
@@ -88,8 +81,8 @@ export const sendMessage = ({ message, anonymous, attachedDeposit }) => {
 // --------------------------------------------------------------------------
 
 //function to get all messages from thanks contract
-export const getMessages = async () => {
-    return await thanksContract.list()
+export const getMessages = () => {
+    return thanksContract.list()
 }
 
 //function to get summarized info about thanks contract

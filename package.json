@@ -1,50 +1,35 @@
 {
-  "name": "thanks",
+  "name": "sample--thanks--fe",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start:dev": "vue-cli-service build --mode=development",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@braid/vue-formulate": "^2.5.3",
     "@headlessui/vue": "^1.6.1",
     "@heroicons/vue": "^1.0.6",
-    "@tailwindcss/forms": "^0.3.3",
-    "@tailwindcss/postcss7-compat": "^2.2.17",
-    "@vue-hero-icons/outline": "^1.7.2",
-    "@vue/compiler-sfc": "^3.2.33",
-    "@vueform/multiselect": "^2.0.0",
-    "autoprefixer": "^9.8.8",
+    "@tailwindcss/forms": "^0.5.2",
+    "@vueform/multiselect": "^2.3.4",
     "bn.js": "^5.2.0",
-    "core-js": "^3.22.5",
-    "flowbite": "^1.4.5",
-    "near-api-js": "^0.41.0",
-    "postcss": "^7.0.39",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17",
-    "vee-validate": "^4.4.0",
+    "core-js": "^3.6.5",
+    "near-api-js": "^0.44.2",
     "vue": "^3.0.0",
-    "vue-loader": "^16.8.1",
-    "vue-loading-overlay": "^4.0.3",
-    "vue-next-select": "^2.10.4",
-    "vue-router": "^4.0.15",
-    "vue-select": "^3.11.2",
-    "vue-spinner": "^1.0.4",
-    "vue-toastification": "^2.0.0-rc.5",
-    "yup": "^0.32.11"
+    "vue-toastification": "^2.0.0-rc.5"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.5.17",
-    "@vue/cli-plugin-eslint": "^4.5.17",
-    "@vue/cli-plugin-router": "^4.5.17",
-    "@vue/cli-service": "^4.5.17",
+    "@tailwindcss/postcss7-compat": "^2.2.17",
+    "@vue/cli-plugin-babel": "~4.5.17",
+    "@vue/cli-plugin-eslint": "~4.5.17",
+    "@vue/cli-service": "~4.5.17",
+    "@vue/compiler-sfc": "^3.0.0",
+    "autoprefixer": "^9.8.8",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0",
-    "postcss-import": "^14.0.2",
-    "vue-cli-plugin-tailwind": "~2.0.6"
+    "postcss": "^7.0.39",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17"
   },
   "eslintConfig": {
     "root": true,
@@ -58,9 +43,7 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {
-      "no-unused-vars": "off"
-    }
+    "rules": {}
   },
   "browserslist": [
     "> 1%",

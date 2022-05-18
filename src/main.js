@@ -1,6 +1,11 @@
 import { createApp } from 'vue'
-import { App } from './App.vue'
-import 'tailwindcss/tailwind.css'
-import './assets/tailwind.css'
+import App from './App.vue'
+import Toast from "vue-toastification";
+import './styles/app.css';
+import "vue-toastification/dist/index.css";
 
-createApp(App).mount('#app')
+const app = createApp(App)
+
+app.use(Toast)
+
+app.mount('#app')
