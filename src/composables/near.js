@@ -13,111 +13,66 @@ import {
     transferFundsToOwner
   } from "../services/near";
 
+  const owner = ref(null)
+  const recipients = ref(null)
+  const isLoading = ref(false)
+  const isTransferingToOwner = ref(null)
+  const messages = ref(null)
+  const summarizedInfo = ref(null)
+  const err = ref(null)
+
   export const useContracts = () => {
-      const isOwner = ref(false)
-      
-      const recipients = ref(null)
+    
+      const setIsLoading = (value) => {isLoading.value = value}
+      const setIsTransferingToOwner = (value) => {isTransferingToOwner.value = value}
 
-      const updateRecipients = () => getRecipients().then((response) => {
-        recipients.value = response
-      })
-              
-      const isRegistered = ref(null);
-      const messages = ref(null);
-      const summarizedInfo = ref(null)
-      const err = ref(null);
-
-      // onMounted(async () => {
-      //     try {
-      //         getOwner().then((response) => {
-      //           isOwner.value = response==wallet.getAccountId()
-
-      //           if (isOwner.value) {
-
-      //               messages.value??getMessages().then((response) =>
-      //               {
-      //                 messages.value=response
-      //               })
-  
-      //               summarizedInfo.value?? getSummarizedInfo().then((response) =>
-      //               {
-      //                 for (const key in response.contributions) {
-      //                   console.log(response.contributions[key])
-      //                   response.contributions[key] = formatNearAmount(response.contributions[key].toLocaleString())
-      //                   console.log(response.contributions[key])
-      //               }
-
-      //                 summarizedInfo.value= response.contributions
-      //               })
-      //           }
-
-      //         })
-      //         getRecipients().then((response) =>
-      //         {
-      //           recipients.value=response
-      //         })
-              
-      //     }
-      //     catch (e) {
-      //         err.value = e;
-      //         console.log(err.value);
-      //     }
-      // })
-
-      const fetchSummarizedInfo = () => {
-        getSummarizedInfo().then((response) => {
-          summarizedInfo.value = response.contributions
-        })
+      const handleGetRecipients = () => {
+        return getRecipients()
       }
 
-      const fetchIsOwner = () => {
-        getOwner().then((response) => {
-          isOwner.value = response==wallet.getAccountId()
-        })
+      const handleGetSummarizedInfo = () => {
+        return getSummarizedInfo()
+      }
+
+      const handleGetOwner = () => {
+        return getOwner()
       }
 
       const fetchMessages = () => {
-        getMessages().then((response) => {
-          messages.value=response
-        })
+        return getMessages()
       }
 
       const handleSendMessage = ({message,anonymous,attachedDeposit}) => {
-            sendMessage({message,anonymous,attachedDeposit});
+            return sendMessage({message,anonymous,attachedDeposit});
       };
 
       const handleTransfer = () => {
-            transferFundsToOwner();
+            return transferFundsToOwner();
       }
 
       return {
-          isOwner,
-          setIsOwner:fetchIsOwner,
+          isLoading,
+          isTransferingToOwner,
+          isRegistered,
+          setIsLoading,
+          setIsTransferingToOwner,
+          owner,
+          err,
+          getOwner:handleGetOwner,
           recipients,
-          updateRecipients,
+          getRecipients:handleGetRecipients,
           messages,
-          setMessages:fetchMessages,
+          getMessages:fetchMessages,
           summarizedInfo,
-          setSummarizedInfo:fetchSummarizedInfo,
+          getSummarizedInfo:handleGetSummarizedInfo,
           sendMessage:handleSendMessage,
           transferFunds:handleTransfer
       };
   };
 
-  export const useWallet = () => {
-    const accountId = ref('')
-    accountId.value = wallet.getAccountId()
-    const err = ref(null)
+  const accountId = ref(null)
 
-    onMounted(async () => {
-        try {
-          console.log('on mounted from use wallet')
-          accountId.value = wallet.getAccountId()
-        } catch (e) {
-          err.value = e;
-          console.error(err.value);
-        }
-      });
+  export const useWallet = () => {
 
     const handleSignIn = () => {
       wallet.requestSignIn({
@@ -129,6 +84,7 @@ import {
     const handleSignOut = () => {
         wallet.signOut()
         accountId.value = wallet.getAccountId()
+        console.log(accountId.value)
     }
 
     const format = (yoctoNear) => {
@@ -136,7 +92,9 @@ import {
     }
 
     return {
+        wallet,
         accountId,
+        err,
         signIn: handleSignIn,
         signOut: handleSignOut,
         formatYoctoNear: format

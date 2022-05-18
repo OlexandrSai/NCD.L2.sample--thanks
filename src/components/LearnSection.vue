@@ -25,23 +25,7 @@
 
 <script>
 import { AcademicCapIcon, DesktopComputerIcon } from '@heroicons/vue/outline'
-
-const communicationFeatures = [
-  {
-    id: 1,
-    name: 'Self-paced Courses',
-    description:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.',
-    icon: DesktopComputerIcon,
-  },
-  {
-    id: 2,
-    name: 'Certifications and Awards',
-    description:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.',
-    icon: AcademicCapIcon,
-  },
-]
+import { communicationFeatures } from '../constants/mockData.js';
 
 export default {
 setup() {

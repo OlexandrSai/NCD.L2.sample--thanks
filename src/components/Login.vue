@@ -32,7 +32,7 @@ export default {
         LogoutIcon
     },
     setup() {
-        const { accountId,signIn, signOut } = useWallet();
+        const { accountId, signIn, signOut } = useWallet();
         return {
             accountId,
             signIn,

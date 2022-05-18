@@ -50,7 +50,10 @@
                         Ⓝ
                       </span>
                     </div>
-                    <input name="amount" type="text" v-model="attachedDeposit"  id="tip" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="0" aria-describedby="message-tip" />
+                    <input name="amount" type="text" v-model="attachedDeposit" 
+                    @change="e => attachedDeposit=e.target.value?.replace(',','.')"
+                    @blur="e => attachedDeposit=formatDeposit(e.target.value)"
+                    id="tip" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="0" aria-describedby="message-tip" />
                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <span class="text-gray-500 sm:text-sm" id="message-tip">
                         NEAR
@@ -61,12 +64,16 @@
                 <div class="col-span-6 sm:col-span-6 lg:col-span-3">
                   <button  @click="handleSubmit" class="flex py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     Say Thanks 
-                  </button>
-                </div>
-
-                <div v-if="isOwner" class="col-span-6 sm:col-span-6 lg:col-span-3">
-                  <button  @click="transferFunds" class="flex py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Transfer to owner
+                    <div v-if="isLoading">
+      <svg class="w-5 h-5 ml-1 text-white-600 animate-spin" fill="none"
+         viewBox="0 0 24 24"
+         xmlns="http://www.w3.org/2000/svg">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            fill="currentColor"></path>
+    </svg>
+  </div>
                   </button>
                 </div>
               </div>
@@ -76,46 +83,62 @@
 
 <script>
 import { ref } from 'vue'
-import { useContracts } from '../composables/near'
+import { useContracts } from '../composables/near.js'
+import {useWallet} from '../composables/near.js'
 import Multiselect from '@vueform/multiselect'
 import '@vueform/multiselect/themes/default.css'
 import { Switch, SwitchGroup, SwitchLabel } from '@headlessui/vue'
 
 
 export default {
-  components: {
-    Multiselect,
-    Switch,
-    SwitchGroup,
-    SwitchLabel
-  },
-    setup() {
-
+    setup(){
       const message = ref("")
       const anonymous = ref(false)
       const attachedDeposit = ref(0)
       
-      const { isOwner, recipients, sendMessage, transferFunds } = useContracts()
+      const { isLoading, setIsLoading, recipients, sendMessage } = useContracts()
+      const { accountId, signIn } = useWallet()
 
-      const handleSubmit = () => {
-        console.log('inside')
-        sendMessage({
-          message:message.value,
-          anonymous: anonymous.value,
-          attachedDeposit: attachedDeposit.value
-        })
+
+      const formatDeposit = (value) => (value > 0 ? (value < 5 ? value : 5) : 0);
+
+      async function handleSubmit () {
+        if (accountId.value) {
+          setIsLoading(true)
+          try {
+            await sendMessage({
+            message:message.value,
+            anonymous: anonymous.value,
+            attachedDeposit: attachedDeposit.value
+          })
+          } catch (error) {
+            console.log(error)
+          }
+        setIsLoading(false)
+        } else {
+          signIn()
+        }
       }
 
       return {
+        isLoading,
+        setIsLoading,
         message,
         anonymous,
         attachedDeposit,
-        isOwner,
         recipients,
+        formatDeposit,
         handleSubmit,
-        transferFunds
+        accountId,
+        signIn
       };
 
     },
+    components: {
+    Multiselect,
+    Switch,
+    SwitchGroup,
+    SwitchLabel
+  }
 }
 </script>

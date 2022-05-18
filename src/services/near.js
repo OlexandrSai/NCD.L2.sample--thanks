@@ -31,10 +31,8 @@ function getRegistryContract () {
 }
 
 const thanksContract = getThanksContract()
-console.log(thanksContract)
 
 const registryContract = getRegistryContract()
-console.log(registryContract)
 
 //function to convert from yoctoNear to Near
 export const formatNearAmount = (yoctoNear) => {
@@ -50,8 +48,8 @@ export const formatNearAmount = (yoctoNear) => {
 // --------------------------------------------------------------------------
 
 // function to get all thanks contracts ids which were added to the registry contract
-export const getRecipients = async () => {
-    return await registryContract.list_all()
+export const getRecipients = () => {
+    return registryContract.list_all()
 };  
 
 // function to check is the contract id registered inside REGISTRY contract state
@@ -64,8 +62,8 @@ export const isRegistered = async (contractId) => {
 // --------------------------------------------------------------------------
 
 //function to get owner of a thanks contract
-export const getOwner = async () => {
-    return await thanksContract.get_owner()
+export const getOwner = () => {
+    return thanksContract.get_owner()
 }
 
 // --------------------------------------------------------------------------
@@ -76,12 +74,9 @@ export const getOwner = async () => {
 // --------------------------------------------------------------------------
 
 //function to send a message anon or not anon
-export const sendMessage = async ({ message, anonymous, attachedDeposit }) => {
-    console.log('third inside')
-    console.log(attachedDeposit)
-    attachedDeposit = (utils.format.parseNearAmount(attachedDeposit))
-    console.log(attachedDeposit)
-    return await thanksContract.say(
+export const sendMessage = ({ message, anonymous, attachedDeposit }) => {
+    attachedDeposit = (utils.format.parseNearAmount(attachedDeposit.toString()))
+    return thanksContract.say(
         { anonymous:anonymous, message: message },
         gas,
         attachedDeposit
@@ -98,8 +93,8 @@ export const getMessages = async () => {
 }
 
 //function to get summarized info about thanks contract
-export const getSummarizedInfo = async () => {
-    return await thanksContract.summarize()
+export const getSummarizedInfo = () => {
+    return thanksContract.summarize()
 }
 
 //function to trasfer funds to the owner of thanks smart contract
