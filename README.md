@@ -298,3 +298,41 @@ setup() {
   }
 }
 ```
+
+And inside components we are using the same ``` useWallet()``` and ``` useContracts()``` functions to manage state of dapp. ``` /components/Summarize.vue ``` as an example :
+```
+    setup() {
+        const { transferFunds, summarizedInfo, getSummarizedInfo } = useContracts()
+        const isTransferingToOwner = ref(false)
+        const onTransfer = ref(false)
+        const toast = useToast()
+
+        async function handleTransfer() {
+            try {
+                isTransferingToOwner.value = true
+                await transferFunds()
+                toast.success(`Transfer success`)
+                onTransfer.value = true
+            } catch (error) {
+                const errorMessage = error?.kind?.ExecutionError
+                toast.error(errorMessage.slice(0, errorMessage.match(', filename').index))
+            }
+            isTransferingToOwner.value = false
+        }
+
+        watch(onTransfer, async () => {
+            if (onTransfer.value) {
+                summarizedInfo.value = await getSummarizedInfo()
+                onTransfer.value = false
+            }
+        }, { deep: true })
+
+        return {
+            isTransferingToOwner,
+            handleTransfer,
+            summarizedInfo,
+            getSummarizedInfo,
+            utils
+        }
+    }
+```
