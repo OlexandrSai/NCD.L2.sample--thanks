@@ -204,7 +204,7 @@ Then in ```composables/near.js``` we are just importing all logic from ```servic
 } from "../services/near";
 ```
 
-and using it to store some state of contract and to call contracts functions: 
+and using it to store some state of contracts and to call contracts functions: 
 ```
 const owner = ref(null)
 const recipients = ref(null)
