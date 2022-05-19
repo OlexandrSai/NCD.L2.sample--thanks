@@ -77,7 +77,7 @@ export const getOwner = async () => {
 
 //function to send a message anon or not anon
 export const sendMessage = async ({ message, anonymous, attachedDeposit }) => {
-    attachedDeposit = (utils.format.parseNearAmount(attachedDeposit.toString()))
+    attachedDeposit = (utils.format.parseNearAmount(attachedDeposit.toString())) // converts yoctoNEAR (10^-24) amount into NEAR
     return await thanksContract.say(
         { anonymous: anonymous, message: message },
         gas,
