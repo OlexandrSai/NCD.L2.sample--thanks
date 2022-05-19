@@ -214,9 +214,6 @@ const err = ref(null)
 
 export const useContracts = () => {
 
-  const setIsLoading = (value) => { isLoading.value = value }
-  const setIsTransferingToOwner = (value) => { isTransferingToOwner.value = value }
-
   const handleGetRecipients = () => {
     return getRecipients()
   }
@@ -245,8 +242,6 @@ export const useContracts = () => {
     isLoading,
     isTransferingToOwner,
     isRegistered,
-    setIsLoading,
-    setIsTransferingToOwner,
     owner,
     err,
     getOwner: handleGetOwner,
