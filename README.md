@@ -137,4 +137,30 @@ export const useWallet = () => {
 };
 ```
 
-To work with smart thanks and registry smart contracts we will create separate functions to split the logic. We are loading the contracts inside  ``` /services/near.js ```
+To work with smart thanks and registry smart contracts we will create separate ```useContracts()``` function with Composition API to split the logic. We are loading the contracts inside  ``` /services/near.js ```
+```
+const thanksContract = getThanksContract()
+const registryContract = getRegistryContract()
+
+function getThanksContract() {
+    return new Contract(
+        wallet.account(), // the account object that is connecting
+        THANKS_CONTRACT_ID, // name of contract you're connecting to
+        {
+            viewMethods: ['get_owner'], // view methods do not change state but usually return a value
+            changeMethods: ['say', 'list', 'summarize', 'transfer'] // change methods modify state
+        }
+    )
+}
+
+function getRegistryContract() {
+    return new Contract(
+        wallet.account(), // the account object that is connecting
+        REGISTRY_CONTRACT_ID, // name of contract you're connecting to
+        {
+            viewMethods: ["list_all", "is_registered"], // view methods do not change state but usually return a value
+            changeMethods: ['register'] // change methods modify state
+        }
+    )
+}
+```
