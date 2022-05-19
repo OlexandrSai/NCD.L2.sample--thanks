@@ -87,14 +87,14 @@ export default {
     const message = ref("")
     const anonymous = ref(false)
     const attachedDeposit = ref(0)
-    const { isLoading, setIsLoading, recipients, sendMessage } = useContracts()
+    const { isLoading, recipients, sendMessage } = useContracts()
     const { accountId, signIn } = useWallet()
     const toast = useToast()
     const formatDeposit = (value) => (value > 0 ? (value < 5 ? value : 5) : 0);
 
     async function handleSubmit() {
       if (accountId.value) {
-        setIsLoading(true)
+        isLoading.value = true
         try {
           await sendMessage({
             message: message.value,
@@ -108,15 +108,14 @@ export default {
           const errorMessage = error?.kind?.ExecutionError
           toast.error(errorMessage.slice(0, errorMessage.match(', filename').index))
         }
-        setIsLoading(false)
+        isLoading.value = false
       } else {
         signIn()
       }
     }
-    
+
     return {
       isLoading,
-      setIsLoading,
       message,
       anonymous,
       attachedDeposit,

@@ -21,9 +21,6 @@ const err = ref(null)
 
 export const useContracts = () => {
 
-  const setIsLoading = (value) => { isLoading.value = value }
-  const setIsTransferingToOwner = (value) => { isTransferingToOwner.value = value }
-
   const handleGetRecipients = () => {
     return getRecipients()
   }
@@ -52,8 +49,6 @@ export const useContracts = () => {
     isLoading,
     isTransferingToOwner,
     isRegistered,
-    setIsLoading,
-    setIsTransferingToOwner,
     owner,
     err,
     getOwner: handleGetOwner,
@@ -73,6 +68,9 @@ const accountId = ref(null)
 export const useWallet = () => {
 
   const handleSignIn = () => {
+    // redirects user to wallet to authorize your dApp
+    // this creates an access key that will be stored in the browser's local storage
+    // access key can then be used to connect to NEAR and sign transactions via keyStore
     wallet.requestSignIn({
       contractId: THANKS_CONTRACT_ID,
       methodNames: [] // add methods names to restrict access
