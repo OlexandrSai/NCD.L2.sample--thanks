@@ -89,3 +89,46 @@ We are using ```near-api-js``` to work with NEAR blockchain. In ``` /services/ne
 ```
 import { keyStores, Near, Contract, WalletConnection, utils } from "near-api-js";
 ```
+Then we are connecting to NEAR:
+```
+// connecting to NEAR, new NEAR is being used here to awoid async/await
+export const near = new Near({
+    networkId: process.env.VUE_APP_networkId,
+    keyStore: new keyStores.BrowserLocalStorageKeyStore(),
+    nodeUrl: process.env.VUE_APP_nodeUrl,
+    walletUrl: process.env.VUE_APP_walletUrl,
+});
+
+``` 
+and creating wallet connection
+```
+export const wallet = new WalletConnection(near, "sample--Thanks--dapp");
+```
+After this by using Composition API we need to create ```useWallet()``` function and use inside ```signIn()``` and ```signOut()``` functions of wallet object. By doing this login functionality can now be used in any component. 
+```
+export const useWallet = () => {
+
+  const handleSignIn = () => {
+    // redirects user to wallet to authorize your dApp
+    // this creates an access key that will be stored in the browser's local storage
+    // access key can then be used to connect to NEAR and sign transactions via keyStore
+    wallet.requestSignIn({
+      contractId: THANKS_CONTRACT_ID,
+      methodNames: [] // add methods names to restrict access
+    })
+  }
+
+  const handleSignOut = () => {
+    wallet.signOut()
+    accountId.value = wallet.getAccountId()
+  }
+
+  return {
+    wallet,
+    accountId,
+    err,
+    signIn: handleSignIn,
+    signOut: handleSignOut
+  };
+};
+```
