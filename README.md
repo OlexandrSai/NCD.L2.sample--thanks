@@ -83,4 +83,9 @@ yarn lint
 
 ## 👀 Code walkthrough for Near university students
 
-<a href="" target="_blank">Code walkthrough</a>
+<a href="" target="_blank">Code walkthrough video</a>
+
+We are using ```near-api-js``` to work with NEAR blockchain. In ``` /services/near.js ``` we are importing classes, functions and configs which we are going to use:
+```
+import { keyStores, Near, Contract, WalletConnection, utils } from "near-api-js";
+```
