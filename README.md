@@ -82,3 +82,5 @@ yarn lint
 ```
 
 ## 👀 Code walkthrough for Near university students
+
+<a href="" target="_blank">Code walkthrough</a>
