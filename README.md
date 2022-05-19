@@ -262,7 +262,7 @@ export const useContracts = () => {
 };
 ```
 
-Inside ```/views/Home.vue``` we have lifecycle hook ``` onBeforeMount() ``` where we are getting all the data from the smart contract 
+Inside ```/views/Home.vue``` we have lifecycle hook ``` onBeforeMount() ``` where we are getting all the data from the smart contract with ``` useWallet()``` and ``` useContracts()```
 ```
 setup() {
       const { accountId } = useWallet()
