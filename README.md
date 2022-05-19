@@ -9,6 +9,11 @@ The goal of this repository is to make it as easy as possible to get started wri
 ## ⚠️ Warning
 Any content produced by NEAR, or developer resources that NEAR provides, are for educational and inspiration purposes only. NEAR does not encourage, induce or sanction the deployment of any such applications in violation of applicable laws or regulations.
 
+## Usage
+Owner view
+![image](https://user-images.githubusercontent.com/38455192/169348821-a191c98b-c1ab-4580-811c-d91baaf21db4.png)
+
+
 
 ## Project setup
 ```
