@@ -32,7 +32,7 @@ To deploy sample--thanks to your account visit <a href="https://github.com/Learn
 
 Also you can watch this video <a href="https://www.loom.com/share/15692f40800a4686ad47af71e9368a3d" target="_blank">video. </a> 
 
-<iframe src="https://www.loom.com/embed/15692f40800a4686ad47af71e9368a3d" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+[![image](https://user-images.githubusercontent.com/38455192/169353150-81bf6d02-1a9e-428b-88eb-23f3c2c14328.png)]https://www.loom.com/share/15692f40800a4686ad47af71e9368a3d
 
 ## Project setup
 ```
