@@ -34,7 +34,7 @@ Also you can watch this video :
 
 <a href="https://www.loom.com/share/15692f40800a4686ad47af71e9368a3d" target="_blank">![image](https://user-images.githubusercontent.com/38455192/169353150-81bf6d02-1a9e-428b-88eb-23f3c2c14328.png)</a>
 
-After you successfully deployed registry and thanks contracts and you have contract ids, you can input them on a deployed <a href="sample-thanks.onrender.com/" target="_blank">website </a> or you can put it inside .env file
+After you successfully deployed registry and thanks contracts and you have contract ids, you can input them on a deployed <a href="sample-thanks.onrender.com/" target="_blank">website </a> or you can clone the repo and put contract ids inside .env file
 
 ```
 VUE_APP_THANKS_CONTRACT_ID = "put your thanks contract id here"
