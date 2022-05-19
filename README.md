@@ -165,6 +165,7 @@ function getRegistryContract() {
 }
 ```
 and we are creating function to export for each contract function
+
 example of a call with no params: 
 ```
 //function to get all messages from thanks contract
@@ -172,6 +173,7 @@ export const getMessages = async () => {
     return await thanksContract.list()
 }
 ```
+
 example of call with params 
 ```
 //function to send a message anon or not anon
@@ -185,4 +187,17 @@ export const sendMessage = async ({ message, anonymous, attachedDeposit }) => {
 }
 ```
 
-Then in ```composables/near.js``` we are importing all logic from ```services/near.js``` 
+Then in ```composables/near.js``` we are just importing all logic from ```services/near.js```: 
+```
+ import {
+  wallet,
+  THANKS_CONTRACT_ID,
+  getRecipients,
+  getOwner,
+  isRegistered,
+  sendMessage,
+  getMessages,
+  getSummarizedInfo,
+  transferFundsToOwner
+} from "../services/near";
+```
