@@ -17,6 +17,7 @@ Owner view
 <a href="" target="_blank">UI walkthrough</a>
 You can use this app with contract ids which were deployed by the creators of this repo or you can use it with your own deployed contract ids.
 If you are using not yours contract ids some functions of the thanks/registry contracts will not work because they are set to work only if owner called this  functions.
+
 <a href="https://github.com/Learn-NEAR/NCD.L1.sample--thanks/blob/66dc6fb42a62317f8ff31c9c9ab96a995f3edd78/src/thanks/assembly/index.ts#L57" target="_blank">Example of such  function:</a>
 ```
   summarize(): Contract {
