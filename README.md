@@ -164,6 +164,7 @@ function getRegistryContract() {
     )
 }
 ```
+
 and we are creating function to export for each contract function
 
 example of a call with no params: 
@@ -178,13 +179,14 @@ example of call with params
 ```
 //function to send a message anon or not anon
 export const sendMessage = async ({ message, anonymous, attachedDeposit }) => {
-    attachedDeposit = (utils.format.parseNearAmount(attachedDeposit.toString()))
+    attachedDeposit = (utils.format.parseNearAmount(attachedDeposit.toString())) // converts yoctoNEAR (10^-24) amount into NEAR
     return await thanksContract.say(
         { anonymous: anonymous, message: message },
         gas,
         attachedDeposit
     )
 }
+
 ```
 
 Then in ```composables/near.js``` we are just importing all logic from ```services/near.js```: 
