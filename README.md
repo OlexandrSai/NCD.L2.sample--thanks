@@ -108,7 +108,7 @@ After this by using Composition API we need to create ```useWallet()``` function
 
 And also we in return statement we are returning wallet object, we are doing this to call ``` wallet.getAccountId()``` to show accountId in ``` /components/Login.vue ```
 
-``` useWallet()``` code 
+``` useWallet()``` code :
 ```
 export const useWallet = () => {
 
@@ -137,7 +137,7 @@ export const useWallet = () => {
 };
 ```
 
-To work with smart thanks and registry smart contracts we will create separate ```useContracts()``` function with Composition API to split the logic. We are loading the contracts inside  ``` /services/near.js ```
+To work with smart thanks and registry smart contracts we will create separate ```useContracts()``` function with Composition API to split the logic. We are loading the contracts inside  ``` /services/near.js:```
 ```
 const thanksContract = getThanksContract()
 const registryContract = getRegistryContract()
