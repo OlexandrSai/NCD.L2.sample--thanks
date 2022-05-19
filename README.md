@@ -105,6 +105,10 @@ and creating wallet connection
 export const wallet = new WalletConnection(near, "sample--Thanks--dapp");
 ```
 After this by using Composition API we need to create ```useWallet()``` function and use inside ```signIn()``` and ```signOut()``` functions of wallet object. By doing this login functionality can now be used in any component. 
+
+And also we in return statement we are returning wallet object, we are doing this to call ``` wallet.getAccountId()``` in our app.
+![image](https://user-images.githubusercontent.com/38455192/169361138-acd03e90-ba07-48ef-9574-f6483c053f3c.png)
+
 ```
 export const useWallet = () => {
 
