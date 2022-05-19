@@ -261,3 +261,43 @@ export const useContracts = () => {
   };
 };
 ```
+
+Inside ```/views/Home.vue``` we have lifecycle hook ``` onBeforeMount() ``` where we are getting all the data from the smart contract 
+```
+setup() {
+      const { accountId } = useWallet()
+      const { getOwner, owner, messages, getMessages, recipients, getRecipients, summarizedInfo, getSummarizedInfo} = useContracts()
+
+      onBeforeMount(async () => {
+          accountId.value = await wallet.getAccountId()
+          owner.value = await getOwner()
+          recipients.value = await getRecipients()
+          messages.value = mockDonatesHistory
+          if (owner.value == accountId.value) {
+              messages.value = await getMessages()
+              summarizedInfo.value = await getSummarizedInfo()
+            } 
+      })
+
+      watch(accountId, async ()=>{
+        if (owner.value == accountId.value) {
+            messages.value = await getMessages()
+            return
+        }
+        messages.value = mockDonatesHistory
+      }, {deep:true})
+      
+      return {
+          accountId,
+          getOwner,
+          owner,
+          messages,
+          getMessages,
+          recipients,
+          getRecipients,
+          summarizedInfo,
+          getSummarizedInfo
+      }
+  }
+}
+```
