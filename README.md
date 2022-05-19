@@ -11,6 +11,7 @@ Any content produced by NEAR, or developer resources that NEAR provides, are for
 
 ## Usage
 Owner view
+
 ![image](https://user-images.githubusercontent.com/38455192/169348821-a191c98b-c1ab-4580-811c-d91baaf21db4.png)
 
 
