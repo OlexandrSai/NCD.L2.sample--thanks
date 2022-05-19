@@ -107,7 +107,7 @@ and creating wallet connection
 ```
 export const wallet = new WalletConnection(near, "sample--Thanks--dapp");
 ```
-After this by using Composition API we need to create ```useWallet()``` function and use inside ```signIn()``` and ```signOut()``` functions of wallet object. By doing this login functionality can now be used in any component. 
+After this by using Composition API we need to create ```useWallet()``` function and use inside ```signIn()``` and ```signOut()``` functions of wallet object. By doing this, login functionality can now be used in any component. 
 
 And also we in return statement we are returning wallet object, we are doing this to call ``` wallet.getAccountId()``` to show accountId in ``` /components/Login.vue ```
 
