@@ -12,6 +12,9 @@ Any content produced by NEAR, or developer resources that NEAR provides, are for
 
 
 ## ⚡  Usage
+Right now I sent PR to NCD.L1.sample--thanks with version of contract which will work with this frontend: 
+<a href="https://github.com/Learn-NEAR/NCD.L1.sample--thanks/pull/7/commits/7393471f09499dfd72cee6b9a8c36279953adfbd" target="_blank">code</a>
+
 Owner view
 
 ![image](https://user-images.githubusercontent.com/38455192/169348821-a191c98b-c1ab-4580-811c-d91baaf21db4.png)
