@@ -42,24 +42,40 @@ VUE_APP_REGISTRY_CONTRACT_ID="put your registry contract id here"
 ...
 ```
 
-## Project setup
+After you input your values inside .env file, you need to :
+1. Install all dependencies 
 ```
 npm install
 ```
-
-### Compiles and hot-reloads for development
+or
+```
+yarn
+```
+2. Run the project locally
 ```
 npm run serve
 ```
+or 
+```
+yarn serve
+```
 
-### Compiles and minifies for production
+Other commands:
+Compiles and minifies for production
 ```
 npm run build
 ```
-
-### Lints and fixes files
+or
+```
+yarn build
+```
+Lints and fixes files
 ```
 npm run lint
+```
+or
+```
+yarn lint
 ```
 
 ### Customize configuration
