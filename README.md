@@ -15,6 +15,7 @@ Owner view
 ![image](https://user-images.githubusercontent.com/38455192/169348821-a191c98b-c1ab-4580-811c-d91baaf21db4.png)
 
 <a href="" target="_blank">UI walkthrough</a>
+
 You can use this app with contract ids which were deployed by the creators of this repo or you can use it with your own deployed contract ids.
 If you are using not yours contract ids some functions of the thanks/registry contracts will not work because they are set to work only if owner called this  functions.
 
