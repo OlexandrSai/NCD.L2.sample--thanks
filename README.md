@@ -201,3 +201,63 @@ Then in ```composables/near.js``` we are just importing all logic from ```servic
   transferFundsToOwner
 } from "../services/near";
 ```
+
+and using it to store some state of contract and to call contract functions: 
+```
+const owner = ref(null)
+const recipients = ref(null)
+const isLoading = ref(false)
+const isTransferingToOwner = ref(null)
+const messages = ref(null)
+const summarizedInfo = ref(null)
+const err = ref(null)
+
+export const useContracts = () => {
+
+  const setIsLoading = (value) => { isLoading.value = value }
+  const setIsTransferingToOwner = (value) => { isTransferingToOwner.value = value }
+
+  const handleGetRecipients = () => {
+    return getRecipients()
+  }
+
+  const handleGetSummarizedInfo = () => {
+    return getSummarizedInfo()
+  }
+
+  const handleGetOwner = () => {
+    return getOwner()
+  }
+
+  const fetchMessages = () => {
+    return getMessages()
+  }
+
+  const handleSendMessage = ({ message, anonymous, attachedDeposit }) => {
+    return sendMessage({ message, anonymous, attachedDeposit });
+  };
+
+  const handleTransfer = () => {
+    return transferFundsToOwner();
+  }
+
+  return {
+    isLoading,
+    isTransferingToOwner,
+    isRegistered,
+    setIsLoading,
+    setIsTransferingToOwner,
+    owner,
+    err,
+    getOwner: handleGetOwner,
+    recipients,
+    getRecipients: handleGetRecipients,
+    messages,
+    getMessages: fetchMessages,
+    summarizedInfo,
+    getSummarizedInfo: handleGetSummarizedInfo,
+    sendMessage: handleSendMessage,
+    transferFunds: handleTransfer
+  };
+};
+```
