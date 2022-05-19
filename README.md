@@ -14,6 +14,8 @@ Owner view
 
 ![image](https://user-images.githubusercontent.com/38455192/169348821-a191c98b-c1ab-4580-811c-d91baaf21db4.png)
 
+<a href="" target="_blank">UI walkthrough</a>
+
 
 
 ## Project setup
