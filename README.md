@@ -30,7 +30,7 @@ If you are using not yours contract ids some functions of the thanks/registry co
 
 To deploy sample--thanks to your account visit <a href="https://github.com/Learn-NEAR/NCD.L1.sample--thanks/tree/registry" target="_blank">this repo (smart contract deployment instructions are inside):</a> 
 
-Also you can watch this video <a href="https://www.loom.com/share/15692f40800a4686ad47af71e9368a3d" target="_blank">video. </a> 
+Also you can watch this video : 
 
 <a href="https://www.loom.com/share/15692f40800a4686ad47af71e9368a3d" target="_blank">![image](https://user-images.githubusercontent.com/38455192/169353150-81bf6d02-1a9e-428b-88eb-23f3c2c14328.png)</a>
 
