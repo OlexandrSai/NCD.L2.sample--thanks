@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {keyStores, Near, utils, WalletConnection} from 'near-api-js';
+import { Contract, keyStores, Near, utils, WalletConnection } from 'near-api-js';
 import {environment} from "../../environments/environment";
 
 @Injectable({
@@ -8,8 +8,12 @@ import {environment} from "../../environments/environment";
 export class NearService {
   public near: Near;
   public wallet: WalletConnection;
+  public thanksContract: any;
+  public registryContract: any;
+
 
   constructor() {
+    // connecting to NEAR
     this.near = new Near({
       networkId: "testnet",
       keyStore: new keyStores.BrowserLocalStorageKeyStore(),
@@ -17,32 +21,94 @@ export class NearService {
       walletUrl: environment.WALLET_URL,
       headers: {}
     });
+
+    // create wallet connection
     this.wallet = new WalletConnection(this.near, "thankyou");
+    // get contracts
+    this.thanksContract = this.getThanksContract()
+    this.registryContract = this.getRegistryContract();
   }
 
-  //function to get all recipients from registry contract
+  getThanksContract = () => {
+    return new Contract(
+      this.wallet.account(), // the account object that is connecting
+      environment.CONTRACT_ID, // name of contract you're connecting to
+      {
+        viewMethods: ['get_owner'], // view methods do not change state but usually return a value
+        changeMethods: ['say', 'list', 'summarize', 'transfer'] // change methods modify state
+      }
+    )
+  }
+
+  getRegistryContract = () => {
+    return new Contract(
+      this.wallet.account(), // the account object that is connecting
+      environment.REGISTRY_CONTRACT_ID, // name of contract you're connecting to
+      {
+        viewMethods: ["list_all", "is_registered"], // view methods do not change state but usually return a value
+        changeMethods: ['register'] // change methods modify state
+      }
+    )
+  }
+
+  // --------------------------------------------------------------------------
+  // functions to call contracts(Registry, Thanks) Public VIEW methods
+  // --------------------------------------------------------------------------
+
+  // functions to call REGISTRY contract public view methods
+  // --------------------------------------------------------------------------
+
+  // function to get all thanks contracts ids which were added to the registry contract
   getRecipients = async () => {
-    return await this.wallet.account().viewFunction(environment.REGISTRY_CONTRACT_ID, "list_all");
+    return await this.registryContract.list_all();
   };
 
-  //function to get all messages from thankyou contract
-  getMessages = async () => {
-    return await this.wallet.account().viewFunction(environment.CONTRACT_ID, "list")
+  isRegistered = async (contractId: any) => {
+    return await this.registryContract.is_registered({ contract: contractId });
   }
 
-  //function to transfer funds to  owner
-  transfer = () => {
-    return this.wallet.account().viewFunction(environment.CONTRACT_ID, "transfer")
+  // functions to call THANKS contract public view methods
+  // --------------------------------------------------------------------------
+
+  // function to get owner of a thanks contract
+  getOwner = async () => {
+    return await this.thanksContract.get_owner();
   }
 
-  //function to sendMessage
+  // --------------------------------------------------------------------------
+  // functions to call contracts(Registry, Thanks) Public CHANGE methods
+  // --------------------------------------------------------------------------
+
+  // functions to call THANKS contract public change methods
+  // --------------------------------------------------------------------------
+
+  // function to send a message anon or not anon
   sendMessage = ({message, anonymous, attachedDeposit}: { message: any, anonymous: any, attachedDeposit: any }) => {
     attachedDeposit = utils.format.parseNearAmount(attachedDeposit) ?? utils.format.parseNearAmount("0");
-    return this.wallet.account().functionCall({
-      contractId: environment.CONTRACT_ID,
-      methodName: "say",
-      args: {message, anonymous},
-      attachedDeposit: attachedDeposit
-    })
+
+    return this.thanksContract.say(
+      { anonymous: anonymous, message: message },
+      environment.GAS,
+      attachedDeposit
+    )
+  }
+
+  // --------------------------------------------------------------------------
+  // functions to call contracts(Registry, Thanks) Owner CHANGE methods
+  // --------------------------------------------------------------------------
+
+  // function to get all messages from thanks contract
+  getMessages = async () => {
+    return await this.thanksContract.list();
+  }
+
+  // function to get summarized info about thanks contract
+  getSummarizedInfo = async () => {
+    return await this.thanksContract.summarize()
+  }
+
+  // function to transfer funds to  owner
+  transfer = async () => {
+    return await this.thanksContract.transfer()
   }
 }
