@@ -13,9 +13,6 @@ Any content produced by NEAR, or developer resources that NEAR provides, are for
 
 
 ## ⚡  Usage
-Right now I sent PR to NCD.L1.sample--thanks with version of contract which will work with this frontend:
-<a href="https://github.com/Learn-NEAR/NCD.L1.sample--thanks/pull/7/commits/7393471f09499dfd72cee6b9a8c36279953adfbd" target="_blank">code</a> after this line will be removed
-
 Owner view
 
 ![image](https://user-images.githubusercontent.com/38455192/169348821-a191c98b-c1ab-4580-811c-d91baaf21db4.png)
@@ -49,11 +46,16 @@ REGISTRY_CONTRACT_ID="put your registry contract id here"
 ```
 
 After you input your values inside environment.ts file, you need to :
-1. Install all dependencies
+1. Install Angular CLI (if previously you didn't)
 ```
-npm i -g @angular/cli && npm i
+npm i -g @angular/cli
 ```
-2. Run the project locally
+
+2. Install all dependencies
+```
+npm i
+```
+3. Run the project locally
 ```
 npm run serve
 ```
@@ -75,7 +77,7 @@ npm run lint
 
 To work with thanks, and registry, contracts were separated inside ``` src/app/services/near.service.ts```.
 ```
-  getThanksContract = () => {
+  getThanksContract() {
     return new Contract(
       this.wallet.account(), // the account object that is connecting
       environment.CONTRACT_ID, // name of contract you're connecting to
@@ -86,7 +88,7 @@ To work with thanks, and registry, contracts were separated inside ``` src/app/s
     )
   }
 
-  getRegistryContract = () => {
+  getRegistryContract() {
     return new Contract(
       this.wallet.account(), // the account object that is connecting
       environment.REGISTRY_CONTRACT_ID, // name of contract you're connecting to
@@ -116,7 +118,7 @@ public wallet: WalletConnection;
 Then in ``` constructor() ``` we are connecting to NEAR:
 ```
 this.near = new Near({
-  networkId: "testnet",
+  networkId: environment.NETWORK_ID,
   keyStore: new keyStores.BrowserLocalStorageKeyStore(),
   nodeUrl: environment.NODE_URL,
   walletUrl: environment.WALLET_URL,
@@ -129,24 +131,6 @@ and creating wallet connection
 this.wallet = new WalletConnection(this.near, "thankyou");
 ```
 
-
-### -- Login Component --
-``` src/app/components/login/login.component.ts ``` Contain all logic related to user AUTH functionality. 
-
-Inside that class, you can find ```signIn()``` and ```signOut()``` functions of wallet object.
-
-``` login.component.ts ``` functions code :
-```
-signIn = () => this.nearService.wallet.requestSignIn(environment.CONTRACT_ID);
-
-signOut = () => {
-  this.nearService.wallet.signOut();
-  localStorage.removeItem(`near-api-js:keystore:${this.accountId}:testnet`);
-  this.accountId = this.nearService.wallet.getAccountId()
-}
-  
-```
-
 ### -- ThankYou Service --
 
 ``` src/app/services/thank-you.service.ts ``` represent the main container for functionality needed in the app
@@ -157,17 +141,17 @@ We use that class to store all shared data and function's:
   public messages: any;
   public err: any;
   
-  updateValues = async () => {...};
-  handleSendMessage = async () => {...};
-  handleTransfer = async () => async () => {...};
-  updateMessages = async () => {...};
+  updateValues() {...};
+  handleSendMessage() {...};
+  handleTransfer() {...};
+  updateMessages() {...};
 ```
 
-And inside components we are using the same ``` this.wallet``` and ``` this.[...contracts]``` functions to manage state of dapp. ``` src/app/components/message-form.component.ts ``` as an example :
+With dependency injection we are able to share everything with other components. ``` src/app/components/message-form.component.ts ``` as an example :
 ```
   constructor(public thankYouService: ThankYouService) {}
 
-  handleSubmit = async () => {
+  handleSubmit() {
     this.loading = true;
 
     await this.thankYouService.handleSendMessage({
@@ -179,7 +163,7 @@ And inside components we are using the same ``` this.wallet``` and ``` this.[...
     this.loading = false;
   }
 
-  handleTransfer = async () => {
+  handleTransfer() {
     this.loading = true;
 
     await this.thankYouService.handleTransfer();
@@ -188,12 +172,30 @@ And inside components we are using the same ``` this.wallet``` and ``` this.[...
   }
 ```
 
+### -- Login Component --
+``` src/app/components/login/login.component.ts ``` Contain all logic related to user AUTH functionality.
+
+Inside that class, you can find ```signIn()``` and ```signOut()``` functions of wallet object.
+
+``` login.component.ts ``` functions code :
+```
+signIn() {
+  this.nearService.wallet.requestSignIn(environment.CONTRACT_ID);
+}
+
+signOut() {
+  this.nearService.wallet.signOut();
+  localStorage.removeItem(`near-api-js:keystore:${this.accountId}:testnet`);
+  this.accountId = this.nearService.wallet.getAccountId()
+}
+```
+
 ## Examples
 ### - Function | No Parameters -
 ``` src/app/services/near.service.ts ```
 ```
 // function to get all messages from thanks contract
-getMessages = async () => {
+getMessages() {
   return await thanksContract.list()
 }
 ```
@@ -201,7 +203,7 @@ getMessages = async () => {
 ### - Function | With Parameters -
 ```
   // function to send a message anon or not anon
-  sendMessage = ({message, anonymous, attachedDeposit}: { message: any, anonymous: any, attachedDeposit: any }) => {
+  sendMessage({message, anonymous, attachedDeposit}: { message: any, anonymous: any, attachedDeposit: any }) {
     attachedDeposit = utils.format.parseNearAmount(attachedDeposit) ?? utils.format.parseNearAmount("0");
 
     return this.thanksContract.say(
@@ -210,5 +212,4 @@ getMessages = async () => {
       attachedDeposit
     )
   }
-
 ```
