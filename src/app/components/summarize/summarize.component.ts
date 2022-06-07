@@ -20,7 +20,7 @@ export class SummarizeComponent implements OnInit {
     console.log(this.summarizedInfo);
   }
 
-  handleTransfer = async () => {
+  async handleTransfer() {
     return this.nearService.transfer();
   }
 

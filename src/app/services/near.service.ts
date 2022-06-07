@@ -15,7 +15,7 @@ export class NearService {
   constructor() {
     // connecting to NEAR
     this.near = new Near({
-      networkId: "testnet",
+      networkId: environment.NETWORK_ID,
       keyStore: new keyStores.BrowserLocalStorageKeyStore(),
       nodeUrl: environment.NODE_URL,
       walletUrl: environment.WALLET_URL,
@@ -29,7 +29,7 @@ export class NearService {
     this.registryContract = this.getRegistryContract();
   }
 
-  getThanksContract = () => {
+  getThanksContract() {
     return new Contract(
       this.wallet.account(), // the account object that is connecting
       environment.CONTRACT_ID, // name of contract you're connecting to
@@ -40,7 +40,7 @@ export class NearService {
     )
   }
 
-  getRegistryContract = () => {
+  getRegistryContract() {
     return new Contract(
       this.wallet.account(), // the account object that is connecting
       environment.REGISTRY_CONTRACT_ID, // name of contract you're connecting to
@@ -59,11 +59,11 @@ export class NearService {
   // --------------------------------------------------------------------------
 
   // function to get all thanks contracts ids which were added to the registry contract
-  getRecipients = async () => {
+  async getRecipients() {
     return await this.registryContract.list_all();
   };
 
-  isRegistered = async (contractId: any) => {
+  async isRegistered(contractId: any) {
     return await this.registryContract.is_registered({ contract: contractId });
   }
 
@@ -71,7 +71,7 @@ export class NearService {
   // --------------------------------------------------------------------------
 
   // function to get owner of a thanks contract
-  getOwner = async () => {
+  async getOwner() {
     return await this.thanksContract.get_owner();
   }
 
@@ -83,7 +83,7 @@ export class NearService {
   // --------------------------------------------------------------------------
 
   // function to send a message anon or not anon
-  sendMessage = ({message, anonymous, attachedDeposit}: { message: any, anonymous: any, attachedDeposit: any }) => {
+  sendMessage({message, anonymous, attachedDeposit}: { message: any, anonymous: any, attachedDeposit: any }) {
     attachedDeposit = utils.format.parseNearAmount(attachedDeposit) ?? utils.format.parseNearAmount("0");
 
     return this.thanksContract.say(
@@ -98,17 +98,17 @@ export class NearService {
   // --------------------------------------------------------------------------
 
   // function to get all messages from thanks contract
-  getMessages = async () => {
+  async getMessages() {
     return await this.thanksContract.list();
   }
 
   // function to get summarized info about thanks contract
-  getSummarizedInfo = async () => {
+  async getSummarizedInfo() {
     return await this.thanksContract.summarize()
   }
 
   // function to transfer funds to  owner
-  transfer = async () => {
+  async transfer() {
     return await this.thanksContract.transfer()
   }
 }

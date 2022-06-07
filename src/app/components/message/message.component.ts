@@ -11,7 +11,7 @@ export class MessageComponent {
   constructor() {
   }
 
-  getAmount = (tip: number) => {
+  getAmount(tip: number) {
     return tip == 0 ? tip + " N" : (tip / 1000000000000000000000000).toFixed(4) + " N"
   }
 }

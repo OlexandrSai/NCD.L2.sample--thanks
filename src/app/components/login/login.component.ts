@@ -17,9 +17,11 @@ export class LoginComponent implements OnInit {
     this.accountId = this.nearService.wallet.getAccountId();
   }
 
-  signIn = () => this.nearService.wallet.requestSignIn(environment.CONTRACT_ID);
+  signIn() {
+    this.nearService.wallet.requestSignIn(environment.CONTRACT_ID);
+  }
 
-  signOut = () => {
+  signOut() {
     this.nearService.wallet.signOut();
     localStorage.removeItem(`near-api-js:keystore:${this.accountId}:testnet`);
     this.accountId = this.nearService.wallet.getAccountId()

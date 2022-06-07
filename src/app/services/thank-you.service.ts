@@ -13,20 +13,20 @@ export class ThankYouService {
     this.updateValues();
   }
 
-  updateValues = async () => {
+  async updateValues() {
     this.recipients = await this.nearService.getRecipients();
     await this.updateMessages();
   };
 
-  handleSendMessage = async ({message, anonymous, attachedDeposit}: { message: any, anonymous: any, attachedDeposit: any }) => {
+  async handleSendMessage({message, anonymous, attachedDeposit}: { message: any, anonymous: any, attachedDeposit: any }) {
     await this.nearService.sendMessage({message, anonymous, attachedDeposit});
   };
 
-  handleTransfer = async () => {
+  async handleTransfer() {
     await this.nearService.transfer();
   }
 
-  updateMessages = async () => {
+  async updateMessages() {
     this.messages = await this.nearService.getMessages();
     this.messages.reverse();
   }
