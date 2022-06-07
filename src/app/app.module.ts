@@ -12,6 +12,7 @@ import {menu, HeroIconModule, user, logout, annotation, lightningBolt, academicC
 import {NgSelectModule} from "@ng-select/ng-select";
 import {FormsModule} from "@angular/forms";
 import { MessageComponent } from './components/message/message.component';
+import { SummarizeComponent } from './components/summarize/summarize.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { MessageComponent } from './components/message/message.component';
     MessageFormComponent,
     LearnSectionComponent,
     MessageHistoryComponent,
-    MessageComponent
+    MessageComponent,
+    SummarizeComponent
   ],
   imports: [
     BrowserModule,
@@ -46,3 +48,5 @@ import { MessageComponent } from './components/message/message.component';
 })
 export class AppModule {
 }
+// TODO: Create !! NearModule !! =>
+// TODO: NearModule !! LIBRARY !!

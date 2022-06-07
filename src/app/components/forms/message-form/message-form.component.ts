@@ -16,7 +16,7 @@ export class MessageFormComponent {
   constructor(public thankYouService: ThankYouService) {
   }
 
-  handleSubmit = async () => {
+  async handleSubmit() {
     this.loading = true;
 
     await this.thankYouService.handleSendMessage({
@@ -28,7 +28,7 @@ export class MessageFormComponent {
     this.loading = false;
   }
 
-  handleTransfer = async () => {
+  async handleTransfer() {
     this.loading = true;
 
     await this.thankYouService.handleTransfer();
@@ -36,7 +36,7 @@ export class MessageFormComponent {
     this.loading = false;
   }
 
-  recipientChange = (recipient: any) => {
+  async recipientChange(recipient: any) {
     this.recipient = recipient.value;
   }
 }
