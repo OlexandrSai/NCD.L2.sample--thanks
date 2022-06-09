@@ -5,6 +5,8 @@ import {NearService} from "./near.service";
   providedIn: 'root'
 })
 export class ThankYouService {
+  public isOwner: boolean = false;
+  public isLoading: any;
   public recipients: any;
   public messages: any;
   public err: any;
@@ -15,6 +17,7 @@ export class ThankYouService {
 
   async updateValues() {
     this.recipients = await this.nearService.getRecipients();
+    this.isOwner = this.nearService.wallet.getAccountId() === await this.nearService.getOwner()
     await this.updateMessages();
   };
 
@@ -27,7 +30,9 @@ export class ThankYouService {
   }
 
   async updateMessages() {
-    this.messages = await this.nearService.getMessages();
-    this.messages.reverse();
+    if (this.isOwner) {
+      this.messages = await this.nearService.getMessages();
+      this.messages.reverse();
+    }
   }
 }

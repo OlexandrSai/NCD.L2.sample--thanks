@@ -9,7 +9,7 @@ import {ThankYouService} from "../../../services/thank-you.service";
 export class MessageFormComponent {
   public loading = false;
   public anonymous = false;
-  public attachedDeposit = 0;
+  public attachedDeposit: any = 0;
   public message = '';
   public recipient:any = null;
 
@@ -22,9 +22,10 @@ export class MessageFormComponent {
     await this.thankYouService.handleSendMessage({
       message: this.message,
       anonymous: this.anonymous,
-      attachedDeposit: this.attachedDeposit
+      attachedDeposit: this.attachedDeposit.replace(',', '.')
     });
     await this.thankYouService.updateMessages();
+
     this.loading = false;
   }
 
@@ -38,5 +39,9 @@ export class MessageFormComponent {
 
   async recipientChange(recipient: any) {
     this.recipient = recipient.value;
+  }
+
+  formatDeposit() {
+    this.attachedDeposit = this.attachedDeposit > 0 ? (this.attachedDeposit < 5 ? this.attachedDeposit : 5) : 0;
   }
 }

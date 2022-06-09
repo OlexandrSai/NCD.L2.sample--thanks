@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NearService } from "../../services/near.service";
+import { utils } from 'near-api-js';
+import { ThankYouService } from "../../services/thank-you.service";
 
 @Component({
   selector: 'app-summarize',
@@ -8,20 +9,39 @@ import { NearService } from "../../services/near.service";
 })
 export class SummarizeComponent implements OnInit {
   public isTransferringToOwner: boolean = false;
+  public isLoading: boolean = false;
+  public isOwner: boolean = false;
   public onTransfer: boolean = false;
   public summarizedInfo: any;
 
-  constructor(public nearService: NearService) {
-
+  constructor(public thankYouService: ThankYouService) {
   }
 
-  ngOnInit(): void {
-    this.summarizedInfo = this.nearService.getSummarizedInfo();
-    console.log(this.summarizedInfo);
+  async ngOnInit() {
+    await this.check();
+  }
+
+  async check() {
+    this.thankYouService.isLoading = true;
+    this.isOwner = this.thankYouService.nearService.wallet.getAccountId() === await this.thankYouService.nearService.getOwner();
+
+    if (this.isOwner) {
+      this.summarizedInfo = await this.thankYouService.nearService.getSummarizedInfo();
+    }
+
+    this.thankYouService.isLoading = false;
+  }
+
+  formatData(data: any) {
+    return data.length > 10
+      ? utils.format.formatNearAmount(data)
+      : data.toString().match('e')
+        ? data.toString().slice(0, 4)
+        : data;
   }
 
   async handleTransfer() {
-    return this.nearService.transfer();
+    return this.thankYouService.nearService.transfer();
   }
 
 }
