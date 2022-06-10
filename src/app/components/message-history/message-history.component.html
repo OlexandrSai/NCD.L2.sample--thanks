@@ -1,11 +1,8 @@
 <div class="mt-10 -mx-4 relative lg:mt-0 lg:col-start-1">
-<!--  <RadioGroup>-->
-<!--    <RadioGroupLabel class="sr-only">-->
-<!--      Message History-->
-<!--    </RadioGroupLabel>-->
-    <div>
-      <div *ngFor="let item of thankYouService.messages" >
-        <app-message [message]="item"></app-message>
-      </div>
+  <div *ngIf="!thankYouService.isLoading">
+    <div
+      *ngFor="let item of getMessages()">
+      <app-message [message]="item"></app-message>
     </div>
+  </div>
 </div>
