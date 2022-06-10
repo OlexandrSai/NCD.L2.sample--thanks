@@ -11,7 +11,6 @@ export class NearService {
   public thanksContract: any;
   public registryContract: any;
 
-
   constructor() {
     // connecting to NEAR
     this.near = new Near({

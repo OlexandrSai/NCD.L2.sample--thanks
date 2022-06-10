@@ -13,18 +13,25 @@ export class MessageFormComponent {
   public message = '';
   public recipient:any = null;
 
+
   constructor(public thankYouService: ThankYouService) {
   }
 
   async handleSubmit() {
     this.loading = true;
-
-    await this.thankYouService.handleSendMessage({
-      message: this.message,
-      anonymous: this.anonymous,
-      attachedDeposit: this.attachedDeposit.replace(',', '.')
-    });
-    await this.thankYouService.updateMessages();
+    console.log(typeof this.attachedDeposit)
+    console.log(typeof this.attachedDeposit as string)
+    try {
+      await this.thankYouService.handleSendMessage({
+        message: this.message,
+        anonymous: this.anonymous,
+        attachedDeposit: String(this.attachedDeposit as string).replace(',', '.')
+      });
+      await this.thankYouService.updateMessages();
+    } catch (e) {
+      this.thankYouService.err = e;
+      console.log(e);
+    }
 
     this.loading = false;
   }

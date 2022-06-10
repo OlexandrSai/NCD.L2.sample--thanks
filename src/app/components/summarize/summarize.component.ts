@@ -19,6 +19,11 @@ export class SummarizeComponent implements OnInit {
 
   async ngOnInit() {
     await this.check();
+    this.thankYouService.isUpdatedChanged.subscribe(value => {
+      if (value) {
+         this.check();
+      }
+    })
   }
 
   async check() {
@@ -41,7 +46,8 @@ export class SummarizeComponent implements OnInit {
   }
 
   async handleTransfer() {
-    return this.thankYouService.nearService.transfer();
+    await this.thankYouService.nearService.transfer();
+    return await this.thankYouService.nearService.getSummarizedInfo();
   }
 
 }

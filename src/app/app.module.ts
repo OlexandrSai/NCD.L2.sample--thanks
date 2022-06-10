@@ -13,6 +13,7 @@ import {NgSelectModule} from "@ng-select/ng-select";
 import {FormsModule} from "@angular/forms";
 import { MessageComponent } from './components/message/message.component';
 import { SummarizeComponent } from './components/summarize/summarize.component';
+import { LoaderComponent } from './components/shared/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { SummarizeComponent } from './components/summarize/summarize.component';
     LearnSectionComponent,
     MessageHistoryComponent,
     MessageComponent,
-    SummarizeComponent
+    SummarizeComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,

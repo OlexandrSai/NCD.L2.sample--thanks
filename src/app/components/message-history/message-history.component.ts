@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ThankYouService } from "../../services/thank-you.service";
 
 @Component({
@@ -6,7 +6,7 @@ import { ThankYouService } from "../../services/thank-you.service";
   templateUrl: './message-history.component.html',
   styleUrls: ['./message-history.component.css']
 })
-export class MessageHistoryComponent {
+export class MessageHistoryComponent implements OnInit {
   public mockDonatesHistory = [
     {
       id: 1,
@@ -34,7 +34,15 @@ export class MessageHistoryComponent {
     },
   ];
 
-  constructor(public thankYouService: ThankYouService) {
+  constructor(public thankYouService: ThankYouService){
+  }
+
+  ngOnInit() {
+    this.thankYouService.isUpdatedChanged.subscribe(value => {
+      if (value) {
+        this.getMessages();
+      }
+    })
   }
 
   getMessages() {
