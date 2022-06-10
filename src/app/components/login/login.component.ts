@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {NearService} from "../../services/near.service";
 import {environment} from "../../../environments/environment";
+import { ThankYouService } from "../../services/thank-you.service";
 
 @Component({
   selector: 'app-login',
@@ -10,20 +10,21 @@ import {environment} from "../../../environments/environment";
 export class LoginComponent implements OnInit {
   public accountId: any;
 
-  constructor(public nearService: NearService) {
+  constructor(public thankYouService: ThankYouService) {
   }
 
   ngOnInit(): void {
-    this.accountId = this.nearService.wallet.getAccountId();
+    this.accountId = this.thankYouService.nearService.wallet.getAccountId();
   }
 
   signIn() {
-    this.nearService.wallet.requestSignIn(environment.CONTRACT_ID);
+    this.thankYouService.nearService.wallet.requestSignIn(environment.CONTRACT_ID);
   }
 
   signOut() {
-    this.nearService.wallet.signOut();
+    this.thankYouService.nearService.wallet.signOut();
     localStorage.removeItem(`near-api-js:keystore:${this.accountId}:testnet`);
-    this.accountId = this.nearService.wallet.getAccountId()
+    this.accountId = undefined;
+    this.thankYouService.isOwner = false;
   }
 }
