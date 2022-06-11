@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {ThankYouService} from "../../../services/thank-you.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: 'app-message-form',
@@ -9,28 +10,29 @@ import {ThankYouService} from "../../../services/thank-you.service";
 export class MessageFormComponent {
   public loading = false;
   public anonymous = false;
-  public attachedDeposit: any = 0;
+  public attachedDeposit: any;
   public message = '';
   public recipient:any = null;
 
 
-  constructor(public thankYouService: ThankYouService) {
+  constructor(public thankYouService: ThankYouService, private toastr: ToastrService) {
   }
 
   async handleSubmit() {
     this.loading = true;
-    console.log(typeof this.attachedDeposit)
-    console.log(typeof this.attachedDeposit as string)
+
     try {
+      if (this.message === '') { throw new Error('Message length cannot be 0'); }
+
       await this.thankYouService.handleSendMessage({
         message: this.message,
         anonymous: this.anonymous,
-        attachedDeposit: String(this.attachedDeposit as string).replace(',', '.')
+        attachedDeposit: String(this.attachedDeposit),
       });
       await this.thankYouService.updateMessages();
-    } catch (e) {
-      this.thankYouService.err = e;
-      console.log(e);
+    } catch (e: any) {
+      let message = this.thankYouService.err = e.kind ? e?.kind?.ExecutionError : e.message
+      this.toastr.error(message.length > 26 ? message.slice(0, message.match(', filename').index) : message);
     }
 
     this.loading = false;
@@ -49,6 +51,7 @@ export class MessageFormComponent {
   }
 
   formatDeposit() {
+    this.attachedDeposit = (this.attachedDeposit as string).replace(',', '.');
     this.attachedDeposit = this.attachedDeposit > 0 ? (this.attachedDeposit < 5 ? this.attachedDeposit : 5) : 0;
   }
 }
