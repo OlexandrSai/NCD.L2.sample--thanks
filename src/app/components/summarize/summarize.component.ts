@@ -52,7 +52,7 @@ export class SummarizeComponent implements OnInit {
       this.toastr.error('No received (pending) funds to be transferred')
     } else {
       await this.thankYouService.nearService.transfer();
-      await this.thankYouService.nearService.getSummarizedInfo();
+      this.summarizedInfo = await this.thankYouService.nearService.getSummarizedInfo();
     }
 
     this.isLoading = false;

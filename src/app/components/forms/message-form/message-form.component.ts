@@ -27,7 +27,7 @@ export class MessageFormComponent {
       await this.thankYouService.handleSendMessage({
         message: this.message,
         anonymous: this.anonymous,
-        attachedDeposit: String(this.attachedDeposit),
+        attachedDeposit: this.attachedDeposit ? String(this.attachedDeposit) : 0,
       });
       await this.thankYouService.updateMessages();
     } catch (e: any) {
