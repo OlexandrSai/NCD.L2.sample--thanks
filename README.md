@@ -1,15 +1,15 @@
-#  🎓 NCD.L2.sample--thanks dapp
+#  🎓 NCD.L2.sample--thanks dApp
 This repository contains a complete frontend applications (Vue.js, React) to work with
 <a href="https://github.com/Learn-NEAR/NCD.L1.sample--thanks" target="_blank">NCD.L1.sample--thanks smart contract</a> targeting the NEAR platform:
 1. Vue.Js (main branch)
 2. React (react branch)
 2. Angular (angular branch)
 
-The goal of this repository is to make it as easy as possible to get started writing frontend with Vue.js, React and Angular for AssemblyScript contracts built to work with NEAR Protocol.
+The goal of this repository is to make it as easy as possible to get started writing frontend with Vue.js, React, and Angular for AssemblyScript contracts built to work with NEAR Protocol.
 
 
 ## ⚠️ Warning
-Any content produced by NEAR, or developer resources that NEAR provides, are for educational and inspiration purposes only. NEAR does not encourage, induce or sanction the deployment of any such applications in violation of applicable laws or regulations.
+Any content produced by NEAR, or developer resources that NEAR provides, are for educational and inspirational purposes only. NEAR does not encourage, induce or sanction the deployment of any such applications in violation of applicable laws or regulations.
 
 
 ## ⚡  Usage
@@ -19,8 +19,8 @@ Owner view
 
 <a href="https://www.loom.com/share/da86b0536ee540a8b79d4e7c59f88b3a" target="_blank">UI walkthrough</a>
 
-You can use this app with contract ids which were deployed by the creators of this repo or you can use it with your own deployed contract ids.
-If you are using not yours contract ids some functions of the thanks/registry contracts will not work because they are set to work only if owner called this  functions.
+You can use this app with contract ids that were deployed by the creators of this repo or you can use it with your own deployed contract ids.
+If you are using not your contract ids some functions of the thanks/registry contracts will not work because they are set to work only if the owner called this functions.
 
 <a href="https://github.com/Learn-NEAR/NCD.L1.sample--thanks/blob/66dc6fb42a62317f8ff31c9c9ab96a995f3edd78/src/thanks/assembly/index.ts#L57" target="_blank">Example of such  function:</a>
 ```
@@ -33,11 +33,11 @@ If you are using not yours contract ids some functions of the thanks/registry co
 
 To deploy sample--thanks to your account visit <a href="https://github.com/Learn-NEAR/NCD.L1.sample--thanks/tree/registry" target="_blank">this repo (smart contract deployment instructions are inside):</a>
 
-Also you can watch this video :
+Also, you can watch this video :
 
 <a href="https://www.loom.com/share/15692f40800a4686ad47af71e9368a3d" target="_blank">![image](https://user-images.githubusercontent.com/38455192/169353150-81bf6d02-1a9e-428b-88eb-23f3c2c14328.png)</a>
 
-After you successfully deployed registry and thanks contracts and you have contract ids, you can input them on a deployed <a href="sample-thanks.onrender.com/" target="_blank">website </a> or you can clone the repo and put contract ids inside ``` src/environments/environment.ts ``` file :
+After you successfully deployed the registry and thanks contracts and you have contract ids, you can input them on a deployed <a href="sample-thanks.onrender.com/" target="_blank">website </a> or you can clone the repo and put contract ids inside ``` src/environments/environment.ts ``` file :
 
 ```
 CONTRACT_ID = "put your thanks contract id here"
@@ -102,14 +102,14 @@ To work with thanks, and registry, contracts were separated inside ``` src/app/s
 
 ### -- Main Service --
 
-<a href="" >Code walk-through video | TBA |</a> 
+<a href="" >Code walk-through video | TBA |</a>
 
-We are using ```near-api-js``` to work with NEAR blockchain. In ``` src/app/services/near.service.ts ``` we are importing classes, functions and configs which we are going to use:
+We are using ```near-api-js``` to work with NEAR blockchain. In ``` src/app/services/near.service.ts ``` we are importing classes, functions, and configs which we are going to use:
 ```
 import { keyStores, Near, Contract, utils, WalletConnection } from "near-api-js";
 ```
 
-Class contains two variables
+The class contains two variables
 ```
 public near: Near;
 public wallet: WalletConnection;
@@ -133,9 +133,9 @@ this.wallet = new WalletConnection(this.near, "thankyou");
 
 ### -- ThankYou Service --
 
-``` src/app/services/thank-you.service.ts ``` represent the main container for functionality needed in the app
+``` src/app/services/thank-you.service.ts ``` represents the main container for the functionality needed in the app
 
-We use that class to store all shared data and function's:
+We use that class to store all shared data and functions:
 ```
   public recipients: any;
   public messages: any;
@@ -147,7 +147,7 @@ We use that class to store all shared data and function's:
   updateMessages() {...};
 ```
 
-With dependency injection we are able to share everything with other components. ``` src/app/components/message-form.component.ts ``` as an example :
+With dependency injection, we can share everything with other components. ``` src/app/components/message-form.component.ts ``` as an example :
 ```
   constructor(public thankYouService: ThankYouService) {}
 

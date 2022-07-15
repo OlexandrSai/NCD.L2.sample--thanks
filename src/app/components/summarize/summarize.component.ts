@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { utils } from 'near-api-js';
 import { ThankYouService } from "../../services/thank-you.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: 'app-summarize',
@@ -14,7 +15,7 @@ export class SummarizeComponent implements OnInit {
   public onTransfer: boolean = false;
   public summarizedInfo: any;
 
-  constructor(public thankYouService: ThankYouService) {
+  constructor(public thankYouService: ThankYouService,private toastr: ToastrService) {
   }
 
   async ngOnInit() {
@@ -46,8 +47,15 @@ export class SummarizeComponent implements OnInit {
   }
 
   async handleTransfer() {
-    await this.thankYouService.nearService.transfer();
-    return await this.thankYouService.nearService.getSummarizedInfo();
+    this.isLoading = true;
+    if( this.summarizedInfo.contributions.received == 0 ) {
+      this.toastr.error('No received (pending) funds to be transferred')
+    } else {
+      await this.thankYouService.nearService.transfer();
+      this.summarizedInfo = await this.thankYouService.nearService.getSummarizedInfo();
+    }
+
+    this.isLoading = false;
   }
 
 }

@@ -14,6 +14,8 @@ import {FormsModule} from "@angular/forms";
 import { MessageComponent } from './components/message/message.component';
 import { SummarizeComponent } from './components/summarize/summarize.component';
 import { LoaderComponent } from './components/shared/loader/loader.component';
+import { ToastrModule } from "ngx-toastr";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { LoaderComponent } from './components/shared/loader/loader.component';
       attachDefaultDimensionsIfNoneFound: true // default 'false'
     }),
     NgSelectModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
